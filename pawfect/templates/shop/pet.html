@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="Pet">Pet</label>
+        <input type="text" name="pet" placeholder="Pet Category"><br>
+        <a type="submit" href="shop_home" class="btn btn-primary">Back</a>
+        <input type="submit" value="Add">
+    </form>
+</body>
+</html>

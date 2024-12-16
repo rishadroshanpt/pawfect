@@ -50,33 +50,35 @@
           <div class="mb-2">
             <label for="pet_cate" class="form-label">Pet Category:</label>
             <select name="pet_cate" id="">
-                <option value="cat">Cat</option>
-                <option value="dog">Dog</option>
-                <option value="fish">Fish</option>
-                <option value="bird">Bird</option>
-              </select>
+              {% for i in data %}
+                <option value="{{i.pet}}">{{i.pet}}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="mb-2">
             <label for="prd_cate" class="form-label">Product Category:</label>
             <select name="prd_cate" id="">
-                <option value="food">Food</option>
+              {% for i in data1 %}
+                <option value="{{i.category}}">{{i.category}}</option>
+              {% endfor %}
+                <!-- <option value="food">Food</option>
                 <option value="grooming">Grooming</option>
                 <option value="toys">Toys</option>
-                <option value="accessories">Accessories</option>
+                <option value="accessories">Accessories</option> -->
               </select>          
         </div>
           <div class="mb-2">
             <label for="prd_name" class="form-label">Product Name:</label>
             <input type="text" class="form-control" placeholder="Enter Product name" name="prd_name">
           </div>
-          <div class="mb-2">
+          <!-- <div class="mb-2">
             <label for="price" class="form-label">Price:</label>
             <input type="number" class="form-control" placeholder="Enter Product price" name="prd_price">
-          </div>
-          <div class="mb-2">
+          </div> -->
+          <!-- <div class="mb-2">
             <label for="ofrprice" class="form-label">Offer Price:</label>
             <input type="number" class="form-control" placeholder="Enter Offer price" name="ofr_price">
-          </div>
+          </div> -->
           <div class="mb-2">
             <label for="img" class="form-label">Image:</label>
             <input type="file" class="form-control" name="img">

@@ -48,7 +48,30 @@ def shop_home(req):
         return render(req,'shop/home.html',{'data':data})
     else:
         return redirect(shop_login)
-
+    
+def add_pet(req):
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            pet_cate=req.POST['pet']
+            data=Pet.objects.create(pet=pet_cate)
+            data.save()
+            return redirect(add_pet)
+        else:
+            return render(req,'shop/pet.html')
+    else:
+        return redirect(shop_login)
+    
+def add_category(req):
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            prd_cate=req.POST['cate']
+            data1=Category.objects.create(category=prd_cate)
+            data1.save()
+            return redirect(add_category)
+        else:
+            return render(req,'shop/category.html')
+    else:
+        return redirect(shop_login)
 def add_prod(req):
     if 'eshop' in req.session:
         if req.method=='POST':
@@ -56,18 +79,37 @@ def add_prod(req):
             pet_cate=req.POST['pet_cate']
             prd_cate=req.POST['prd_cate']
             prd_name=req.POST['prd_name']
-            prd_price=req.POST['prd_price']
-            ofr_price=req.POST['ofr_price']
+            # prd_price=req.POST['prd_price']
+            # ofr_price=req.POST['ofr_price']
             img=req.FILES['img']
             prd_dis=req.POST['prd_dis']
-            data=Product.objects.create(pet=pet_cate,category=prd_cate,name=prd_name,price=prd_price,ofr_price=ofr_price,img=img,dis=prd_dis)
+            data=Product.objects.create(pet=Pet.objects.get(pet=pet_cate),category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
             data.save()
-            return redirect(add_prod)
+            return redirect(details)
         else:
-            return render(req,'shop/add_prod.html')
+            data=Pet.objects.all()
+            data1=Category.objects.all()
+            return render(req,'shop/add_prod.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
     
+def details(req):
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            product=req.POST['pro']
+            weight=req.POST['weight']
+            price=req.POST['price']
+            ofrPrice=req.POST['offerPrice']
+            stock=req.POST['stock']
+            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data.save()
+            return redirect(details)
+        else:
+            data=Product.objects.all()
+            return render(req,'shop/details.html',{'data':data})
+    else:
+        return redirect(shop_login)
+
 def edit_prod(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
@@ -100,6 +142,6 @@ def delete_prod(req,pid):
     data.delete()
     return redirect(shop_home)
 
-def bookings(req):
-    buy=Buy.objects.all()[::-1]
-    return render(req,'shop/bookings.html',{'buy':buy})
+# def bookings(req):
+#     buy=Buy.objects.all()[::-1]
+#     return render(req,'shop/bookings.html',{'buy':buy})
