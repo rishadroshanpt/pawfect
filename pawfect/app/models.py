@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     category=models.TextField()
-    def __str__(self):
-        return self.category
+    img=models.FileField()
+   
 
 class Pet(models.Model):
     pet=models.TextField()
-    def __str__(self):
-        return self.pet
+    img=models.FileField()
+
 
 class Product(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE)

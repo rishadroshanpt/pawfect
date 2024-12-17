@@ -52,26 +52,84 @@ def shop_home(req):
 def add_pet(req):
     if 'eshop' in req.session:
         if req.method=='POST':
-            pet_cate=req.POST['pet']
-            data=Pet.objects.create(pet=pet_cate)
-            data.save()
+            if 'pet_form' in req.POST:
+                pet_cate=req.POST['pet']
+                petImg=req.FILES.get('petImg')
+                data=Pet.objects.create(pet=pet_cate,img=petImg)
+                data.save()
+            # return redirect(add_pet)
+            elif 'category_form' in req.POST:
+                prd_cate=req.POST['cate']
+                cateImg=req.FILES['cateImg']
+                data1=Category.objects.create(category=prd_cate,img=cateImg)
+                data1.save()
             return redirect(add_pet)
         else:
-            return render(req,'shop/pet.html')
+            data=Pet.objects.all()
+            data1=Category.objects.all()
+            return render(req,'shop/pet.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
     
-def add_category(req):
+def delete_pet(req,pid):
+    data=Pet.objects.get(pk=pid)
+    url=data.img.url
+    og_path=url.split('/')[-1]
+    os.remove('media/'+og_path)
+    data.delete()
+    return redirect(add_pet)
+
+def edit_pet(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
-            prd_cate=req.POST['cate']
-            data1=Category.objects.create(category=prd_cate)
-            data1.save()
-            return redirect(add_category)
+            pet=req.POST['pet']
+            img=req.FILES.get('petImg')
+            if img:
+                Pet.objects.filter(pk=pid).update(pet=pet)
+                data=Pet.objects.get(pk=pid)
+                url=data.img.url
+                og_path=url.split('/')[-1]
+                os.remove('media/'+og_path)
+                data.img=img
+                data.save()
+            else:
+                Pet.objects.filter(pk=pid).update(pet=pet)
+            return redirect(add_pet)
         else:
-            return render(req,'shop/category.html')
+            data=Pet.objects.get(pk=pid)
+            return render(req,'shop/editPet.html',{'data':data})
     else:
         return redirect(shop_login)
+def delete_category(req,pid):
+    data=Category.objects.get(pk=pid)
+    url=data.img.url
+    og_path=url.split('/')[-1]
+    os.remove('media/'+og_path)
+    data.delete()
+    return redirect(add_pet)
+
+def edit_category(req,pid):
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            cate=req.POST['cate']
+            img=req.FILES.get('cateImg')
+            if img:
+                Category.objects.filter(pk=pid).update(category=cate)
+                data=Category.objects.get(pk=pid)
+                url=data.img.url
+                og_path=url.split('/')[-1]
+                os.remove('media/'+og_path)
+                data.img=img
+                data.save()
+            else:
+                Category.objects.filter(pk=pid).update(category=cate)
+            return redirect(add_pet)
+        else:
+            data=Category.objects.get(pk=pid)
+            return render(req,'shop/editCategory.html',{'data':data})
+    else:
+        return redirect(shop_login)
+
 def add_prod(req):
     if 'eshop' in req.session:
         if req.method=='POST':
