@@ -44,7 +44,7 @@ def shp_logout(req):
 
 def shop_home(req):
     if 'eshop' in req.session:
-        data=Product.objects.all()
+        data=Details.objects.all()
         return render(req,'shop/home.html',{'data':data})
     else:
         return redirect(shop_login)
@@ -133,12 +133,10 @@ def edit_category(req,pid):
 def add_prod(req):
     if 'eshop' in req.session:
         if req.method=='POST':
-            # prd_id=req.POST['prd_id']
             pet_cate=req.POST['pet_cate']
             prd_cate=req.POST['prd_cate']
             prd_name=req.POST['prd_name']
-            # prd_price=req.POST['prd_price']
-            # ofr_price=req.POST['ofr_price']
+  
             img=req.FILES['img']
             prd_dis=req.POST['prd_dis']
             data=Product.objects.create(pet=Pet.objects.get(pet=pet_cate),category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
@@ -171,20 +169,19 @@ def details(req):
 def edit_prod(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
-            pet_cate=req.POST['pet_cate']
-            prd_cate=req.POST['prd_cate']
             prd_name=req.POST['prd_name']
-            prd_price=req.POST['prd_price']
-            ofr_price=req.POST['ofr_price']
             prd_dis=req.POST['prd_dis']
             img=req.FILES.get('img')
             if img:
-                Product.objects.filter(pk=pid).update(pet=pet_cate,category=prd_cate,name=prd_name,price=prd_price,ofr_price=ofr_price,dis=prd_dis)
+                Product.objects.filter(pk=pid).update(name=prd_name,dis=prd_dis)
                 data=Product.objects.get(pk=pid)
+                url=data.img.url
+                og_path=url.split('/')[-1]
+                os.remove('media/'+og_path)
                 data.img=img
                 data.save()
             else:
-                Product.objects.filter(pk=pid).update(pet=pet_cate,category=prd_cate,name=prd_name,price=prd_price,ofr_price=ofr_price,dis=prd_dis)
+                Product.objects.filter(pk=pid).update(name=prd_name,dis=prd_dis)
             return redirect(shop_home)
         else:
             data=Product.objects.get(pk=pid)
@@ -192,6 +189,10 @@ def edit_prod(req,pid):
     else:
         return redirect(shop_login)
     
+def edit_details(req,pid):
+    data=Details.objects.get(pk=pid)
+    return render(req,'shop/edit_details.html',{'data':data})
+
 def delete_prod(req,pid):
     data=Product.objects.get(pk=pid)
     url=data.img.url
