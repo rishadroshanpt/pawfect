@@ -10,19 +10,19 @@
 <body>
     <form action="" method="post">
         {% csrf_token %}
-        <label for="cate">Product</label>
+        <label for="pro">Product</label>
         <select name="pro" id="">
             {% for i in data %}
               <option value="{{i.name}}">{{i.name}}</option>
             {% endfor %}
         </select><br>
-        <label for="cate">Weight</label>
+        <label for="weight">Weight</label>
         <input type="text" name="weight" placeholder="Weight"><br>
-        <label for="cate">Price</label>
+        <label for="price">Price</label>
         <input type="text" name="price" placeholder="Price"><br>
-        <label for="cate">Offer Price</label>
+        <label for="offerPrice">Offer Price</label>
         <input type="text" name="offerPrice" placeholder="Offer Price"><br>
-        <label for="cate">Stock</label>
+        <label for="stock">Stock</label>
         <input type="text" name="stock" placeholder="Stock"><br>
         <a type="submit" href="shop_home" class="btn btn-primary">Back</a>
         <input type="submit" value="Submit" class="btn btn-primary">

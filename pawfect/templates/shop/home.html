@@ -43,16 +43,21 @@
         {% for i in data %}
         <div class="col-lg-4">
           <div class="card">
-            <img class="card-img-top" src="{{i.product.img.url}}" alt="Card image" style="height: 400px; width: 100%;object-fit: contain;">
+            <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="height: 400px; width: 100%;object-fit: contain;">
             <div class="card-body">
-              <h4 class="card-title">{{i.product.name}}</h4>
-              <!-- <p class="card-text">{{i.product.dis}}</p> 
-              <p class="card-text">{{i.product.pet.pet}}</p>
-              <p class="card-text">{{i.product.category.category}}</p> -->
-              <s><p class="card-text">₹{{i.price}}</p></s>
-              <h4 class="card-title">₹{{i.ofr_price}}</h4>
-              <a href="edit_prod/{{i.pk}}" class="btn btn-primary">Edit</a>
-              <a href="delete_prod/{{i.pk}}" class="btn btn-danger">Delete</a>
+                <h4 class="card-title">{{i.name}}</h4>
+                <!-- <p class="card-text">{{i.product.dis}}</p> 
+                <p class="card-text">{{i.product.pet.pet}}</p>
+                <p class="card-text">{{i.product.category.category}}</p> -->
+                {% for j in data1 %}
+                    {% if j.product == i %}
+                        <h4 class="card-title">{{j.weight}}gm</h4>
+                        <s><p class="card-text">₹{{j.price}}</p></s>
+                        <h4 class="card-title">₹{{j.ofr_price}}</h4>
+                    {% endif %}
+                {% endfor %}
+                <a href="edit_prod/{{i.pk}}" class="btn btn-primary">Edit</a>
+                <a href="delete_prod/{{i.pk}}" class="btn btn-danger">Delete</a>
             </div>
           </div>
         </div>

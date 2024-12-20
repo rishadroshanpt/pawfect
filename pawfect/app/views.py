@@ -44,8 +44,9 @@ def shp_logout(req):
 
 def shop_home(req):
     if 'eshop' in req.session:
-        data=Details.objects.all()
-        return render(req,'shop/home.html',{'data':data})
+        data=Product.objects.all()
+        data1=Details.objects.all()
+        return render(req,'shop/home.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
     
@@ -190,8 +191,22 @@ def edit_prod(req,pid):
         return redirect(shop_login)
     
 def edit_details(req,pid):
-    data=Details.objects.get(pk=pid)
-    return render(req,'shop/edit_details.html',{'data':data})
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            product=req.POST['pro']
+            weight=req.POST['weight']
+            price=req.POST['price']
+            ofrPrice=req.POST['offerPrice']
+            stock=req.POST['stock']
+            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data.save()
+            return redirect(edit_details.pid)
+        else:
+            data=Details.objects.filter(product=pid)
+            return render(req,'shop/edit_details.html',{'data':data})
+    else:
+        return redirect(shop_login)
+
 
 def delete_prod(req,pid):
     data=Product.objects.get(pk=pid)

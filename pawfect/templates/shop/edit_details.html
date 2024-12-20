@@ -36,21 +36,49 @@
             </ul>
           </div>
         </div>
-      </nav>
-      <form action="" method="post">
-        {% csrf_token %}
-        <label for="cate">Product</label>
-     
-        <label for="cate">Weight</label>
-        <input type="text" name="weight" placeholder="Weight" value="{{data.weight}}"><br>
-        <label for="cate">Price</label>
-        <input type="text" name="price" placeholder="Price" value="{{data.price}}"><br>
-        <label for="cate">Offer Price</label>
-        <input type="text" name="offerPrice" placeholder="Offer Price" value="{{data.ofr_price}}"><br>
-        <label for="cate">Stock</label>
-        <input type="text" name="stock" placeholder="Stock" value="{{data.stock}}"><br>
-        <a type="submit" href="shop_home" class="btn btn-primary">Back</a>
-        <input type="submit" value="Submit" class="btn btn-primary">
-    </form>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9">
+                {% for i in data %}
+                    <div class="card" style="width:300px">
+                        <div class="card-body">
+                        <h4 class="card-title">PRODUCT NAME : {{i.product.name}}</h4>
+                        <p class="card-text">PRODUCT WEIGHT : {{i.weight}}</p>
+                        <p class="card-text">PRODUCT PRICE : {{i.price}}</p>
+                        <p class="card-text">PRODUCT OFFER PRICE : {{i.ofr_price}}</p>
+                        <p class="card-text">PRODUCT STOCK : {{i.stock}}</p>
+                        <a href="#" class="btn btn-primary">EDIT</a>
+                        <a href="#" class="btn btn-danger">DELETE</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h4>ADD NEW DETAILS</h4>
+                    <label for="pro">Product</label>
+                    <select name="pro" id="">
+                        {% for i in data %}
+                        <option value="{{i.product.name}}">{{i.product.name}}</option>
+                        {% endfor %}
+                    </select><br>
+                    <label for="weight">Weight</label>
+                    <input type="text" name="weight" placeholder="Weight"><br>
+                    <label for="price">Price</label>
+                    <input type="text" name="price" placeholder="Price"><br>
+                    <label for="offerPrice">Offer Price</label>
+                    <input type="text" name="offerPrice" placeholder="Offer Price"><br>
+                    <label for="stock">Stock</label>
+                    <input type="text" name="stock" placeholder="Stock"><br>
+                    <a type="submit" href="shop_home" class="btn btn-primary">Back</a>
+                    <input type="submit" value="ADD NEW" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
 </body>
 </html>

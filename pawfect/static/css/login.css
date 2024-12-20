@@ -1,0 +1,20 @@
+body{
+    background-color: rgb(255, 255, 255);
+}
+form{
+    width: 400px;
+    margin: auto;
+    margin-top: 17%;
+    padding: 50px;
+    box-shadow: 0 0 5px;
+    border-radius: 15px;
+}
+form:hover{
+    box-shadow: 0 0 5px red;
+}
+.btn{
+    background-color: blueviolet;
+    color: white;
+    font-weight: 700;
+    margin: auto;
+}
