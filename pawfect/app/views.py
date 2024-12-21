@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings   
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -137,7 +138,6 @@ def add_prod(req):
             pet_cate=req.POST['pet_cate']
             prd_cate=req.POST['prd_cate']
             prd_name=req.POST['prd_name']
-  
             img=req.FILES['img']
             prd_dis=req.POST['prd_dis']
             data=Product.objects.create(pet=Pet.objects.get(pet=pet_cate),category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
@@ -158,11 +158,12 @@ def details(req):
             price=req.POST['price']
             ofrPrice=req.POST['offerPrice']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
             return redirect(details)
         else:
-            data=Product.objects.all()
+            a=21
+            data=Product.objects.get(pk=a)
             return render(req,'shop/details.html',{'data':data})
     else:
         return redirect(shop_login)
@@ -198,15 +199,23 @@ def edit_details(req,pid):
             price=req.POST['price']
             ofrPrice=req.POST['offerPrice']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
-            return redirect(edit_details.pid)
+            if pid:
+                return render(req,'shop/edit_details.html')
+            else:
+                return redirect(edit_details)
         else:
             data=Details.objects.filter(product=pid)
-            return render(req,'shop/edit_details.html',{'data':data})
+            data1=Product.objects.get(pk=pid)
+            return render(req,'shop/edit_details.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
 
+def delete_details(req,pid):
+    data=Details.objects.get(pk=pid)
+    data.delete()
+    return redirect(edit_details)
 
 def delete_prod(req,pid):
     data=Product.objects.get(pk=pid)

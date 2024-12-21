@@ -11,11 +11,9 @@
     <form action="" method="post">
         {% csrf_token %}
         <label for="pro">Product</label>
-        <select name="pro" id="">
-            {% for i in data %}
-              <option value="{{i.name}}">{{i.name}}</option>
-            {% endfor %}
-        </select><br>
+        
+        <label for="pro">Prouct</label>
+        <input type="text" name="pro" value="{{data.pk}}" readonly><br>
         <label for="weight">Weight</label>
         <input type="text" name="weight" placeholder="Weight"><br>
         <label for="price">Price</label>
