@@ -9,12 +9,13 @@ form{
     box-shadow: 0 0 5px;
     border-radius: 15px;
 }
-form:hover{
-    box-shadow: 0 0 5px red;
-}
 .btn{
     background-color: blueviolet;
     color: white;
     font-weight: 700;
     margin: auto;
+}
+input{
+    border-radius: 5px;
+    padding: 10px;
 }

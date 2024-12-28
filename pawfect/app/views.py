@@ -24,16 +24,33 @@ def shop_login(req):
                 login(req,data)
                 req.session['eshop']=uname   #create session
                 return redirect(shop_home)
-            # else:
-            #     login(req,data)
-            #     req.session['user']=uname   #create session
-            #     return redirect(user_home)
+            else:
+                login(req,data)
+                req.session['user']=uname   #create session
+                return redirect(user_home)
         else:
             messages.warning(req,'Invalid username or password.')
             return redirect(shop_login)
     
     else:
         return render(req,'login.html')
+    
+def register(req):
+    if req.method=='POST':
+        name=req.POST['name']
+        email=req.POST['email']
+        password=req.POST['password']
+        # send_mail('register', 'new act', settings.EMAIL_HOST_USER, [email])
+
+        try:
+            data=User.objects.create_user(first_name=name,email=email,password=password,username=email)
+            data.save()
+            return redirect(shop_login)
+        except:
+            messages.warning(req,'User already exists.')
+            return redirect(register)
+    else:
+        return render(req,'register.html')
 
 def shp_logout(req):
     req.session.flush()          #delete session
@@ -142,6 +159,7 @@ def add_prod(req):
             prd_dis=req.POST['prd_dis']
             data=Product.objects.create(pet=Pet.objects.get(pet=pet_cate),category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
             data.save()
+            pk=data.pk
             return redirect(details)
         else:
             data=Pet.objects.all()
@@ -158,12 +176,11 @@ def details(req):
             price=req.POST['price']
             ofrPrice=req.POST['offerPrice']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
             return redirect(details)
         else:
-            a=21
-            data=Product.objects.get(pk=a)
+            data=Product.objects.all()
             return render(req,'shop/details.html',{'data':data})
     else:
         return redirect(shop_login)
@@ -201,10 +218,7 @@ def edit_details(req,pid):
             stock=req.POST['stock']
             data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
-            if pid:
-                return render(req,'shop/edit_details.html')
-            else:
-                return redirect(edit_details)
+            return redirect(shop_home)
         else:
             data=Details.objects.filter(product=pid)
             data1=Product.objects.get(pk=pid)
@@ -215,7 +229,7 @@ def edit_details(req,pid):
 def delete_details(req,pid):
     data=Details.objects.get(pk=pid)
     data.delete()
-    return redirect(edit_details)
+    return redirect(shop_home)
 
 def delete_prod(req,pid):
     data=Product.objects.get(pk=pid)
@@ -228,3 +242,32 @@ def delete_prod(req,pid):
 # def bookings(req):
 #     buy=Buy.objects.all()[::-1]
 #     return render(req,'shop/bookings.html',{'buy':buy})
+
+
+# -----------------------------------shop------------------------------
+
+def user_home(req):
+    if 'user' in req.session:
+        data=Product.objects.all()
+        data1=Details.objects.all()
+        pet=Pet.objects.all()
+        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet})
+    else:
+        return redirect(shop_login)
+    
+def petType(req,pid):
+    if 'user' in req.session:
+        data=Product.objects.filter(pet=pid)
+        data1=Details.objects.all()
+        # pet=Pet.objects.all()
+        return render(req,'user/petType.html',{'data':data,'data1':data1})
+    else:
+        return redirect(shop_login)
+
+def product(req,pid):
+    if 'user' in req.session:
+        data=Product.objects.get(pk=pid)
+        data1=Details.objects.filter(product=pid)
+        return render(req,'user/product.html',{'data':data,'data1':data1})
+    else:
+        return redirect(shop_login)
