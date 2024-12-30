@@ -78,9 +78,10 @@ def add_pet(req):
                 data.save()
             # return redirect(add_pet)
             elif 'category_form' in req.POST:
+                pet_cate=req.POST['pet_cate']
                 prd_cate=req.POST['cate']
                 cateImg=req.FILES['cateImg']
-                data1=Category.objects.create(category=prd_cate,img=cateImg)
+                data1=Category.objects.create(pet=Pet.objects.get(pet=pet_cate),category=prd_cate,img=cateImg)
                 data1.save()
             return redirect(add_pet)
         else:
@@ -152,12 +153,12 @@ def edit_category(req,pid):
 def add_prod(req):
     if 'eshop' in req.session:
         if req.method=='POST':
-            pet_cate=req.POST['pet_cate']
+            # pet_cate=req.POST['pet_cate']
             prd_cate=req.POST['prd_cate']
             prd_name=req.POST['prd_name']
             img=req.FILES['img']
             prd_dis=req.POST['prd_dis']
-            data=Product.objects.create(pet=Pet.objects.get(pet=pet_cate),category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
+            data=Product.objects.create(category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
             data.save()
             pk=data.pk
             return redirect(details)

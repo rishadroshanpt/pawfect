@@ -3,19 +3,19 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Category(models.Model):
-    category=models.TextField()
-    img=models.FileField()
-   
 
 class Pet(models.Model):
     pet=models.TextField()
     img=models.FileField()
 
+class Category(models.Model):
+    pet=models.ForeignKey(Pet,on_delete=models.CASCADE)
+
+    category=models.TextField()
+    img=models.FileField()
 
 class Product(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
-    pet=models.ForeignKey(Pet,on_delete=models.CASCADE)
     name=models.TextField()
     img=models.FileField()
     dis=models.TextField()

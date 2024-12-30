@@ -7,14 +7,33 @@ body{
     height: 60px;
 }
 .nav-link{
-    font-weight: 600;
+    /* font-weight: 600; */
     color: rgb(0, 0, 0);
-    padding: 5px 10px !important;
-    margin: 0 10px;
+    /* padding: 5px 10px !important; */
+    /* margin: 0 10px; */
+    /* color: #fff; */
+    text-transform: uppercase;
+    /* text-decoration: none; */
+    letter-spacing: 0.15em;
+    
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
 }
-.nav-link:hover{
-    color: black;
-    border-bottom: 2px solid black;
+.nav-link:after{
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+.nav-link:hover:after{
+    width: 100%; 
+    left: 0; 
 }
 .active{
     color: black;

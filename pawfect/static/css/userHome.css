@@ -1,0 +1,14 @@
+.petPhoto{
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.petLink{
+    text-decoration: none;
+    color: black;
+}
+.petLink h2{
+    text-align: center;
+}

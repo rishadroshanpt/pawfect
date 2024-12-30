@@ -53,14 +53,6 @@
     <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
           <div class="mb-2">
-            <label for="pet_cate" class="form-label">Pet Category:</label>
-            <select name="pet_cate" id="">
-              {% for i in data %}
-                <option value="{{i.pet}}">{{i.pet}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="mb-2">
             <label for="prd_cate" class="form-label">Product Category:</label>
             <select name="prd_cate" id="">
               {% for i in data1 %}
