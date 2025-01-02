@@ -161,7 +161,7 @@ def add_prod(req):
             data=Product.objects.create(category=Category.objects.get(category=prd_cate),name=prd_name,img=img,dis=prd_dis)
             data.save()
             pk=data.pk
-            return redirect(details)
+            return redirect("details",pid=pk)
         else:
             data=Pet.objects.all()
             data1=Category.objects.all()
@@ -169,7 +169,7 @@ def add_prod(req):
     else:
         return redirect(shop_login)
     
-def details(req):
+def details(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
             product=req.POST['pro']
@@ -177,12 +177,13 @@ def details(req):
             price=req.POST['price']
             ofrPrice=req.POST['offerPrice']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(name=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            data=Details.objects.create(product=Product.objects.get(id=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
-            return redirect(details)
+            return redirect("details",pid=pid)
         else:
-            data=Product.objects.all()
-            return render(req,'shop/details.html',{'data':data})
+            data=Product.objects.get(pk=pid)
+            pk=data.pk
+            return render(req,'shop/details.html',{'pk':pk})
     else:
         return redirect(shop_login)
 
@@ -219,7 +220,7 @@ def edit_details(req,pid):
             stock=req.POST['stock']
             data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
             data.save()
-            return redirect(shop_home)
+            return redirect("edit_details",pid=pid)
         else:
             data=Details.objects.filter(product=pid)
             data1=Product.objects.get(pk=pid)
@@ -258,13 +259,19 @@ def user_home(req):
     
 def petType(req,pid):
     if 'user' in req.session:
-        data=Product.objects.filter(pet=pid)
-        data1=Details.objects.all()
+        data=Category.objects.filter(pet=pid)
         # pet=Pet.objects.all()
-        return render(req,'user/petType.html',{'data':data,'data1':data1})
+        return render(req,'user/petType.html',{'data':data})
     else:
         return redirect(shop_login)
 
+def products(req,pid):
+    if 'user' in req.session:
+        data=Product.objects.filter(category=pid)
+        return render(req,'user/products.html',{'data':data})
+    else:
+        return redirect(shop_login)
+    
 def product(req,pid):
     if 'user' in req.session:
         data=Product.objects.get(pk=pid)
@@ -272,3 +279,26 @@ def product(req,pid):
         return render(req,'user/product.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
+    
+def addCart(req,pid):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        try:
+            data=Cart.objects.get(user=user,product=prod)
+            data.qty+=1
+            data.save()
+        except:
+            data=Cart.objects.create(user=user,product=prod,qty=1)
+            data.save()
+        return redirect(viewCart)
+    else:
+        return redirect(shop_login)  
+    
+def viewCart(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Cart.objects.filter(user=user)
+        return render(req,'user/viewCart.html',{'data':data})
+    else:
+        return redirect(shop_login) 

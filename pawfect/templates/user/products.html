@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -27,7 +27,7 @@
                 <a class="nav-link" href="">FILTER</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../viewCart">CART</a>
+                <a class="nav-link" href="cart">CART</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="bookings">BOOKINGS</a>
@@ -41,21 +41,16 @@
       </nav>
     <div class="container">
       <div class="row">
-        <div class="col-lg-6">
-            <!-- <a class="product" href="product/{{i.pk}}"> -->
-            <img class="petPhoto" src="{{data.img.url}}" alt="" style="width: 500px;height: 600px;object-fit: cover;">
-        </div>
-        <div class="col-lg-6">
-            <h2>{{data.name}}</h2>
-            {% for j in data1 %}
-            <h6>{{j.weight}}</h6>
-            <h6 style="display: inline;" class="price">{{j.price}}</h6>
-            <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
-            <h6>{{j.stock}} Left</h6>
-            <a class="btn btn-primary" href="../addCart/{{j.pk}}">Add to cart</a>
-            {% endfor %}
-
-        </div>
+        {% for i in data %}
+            <div class="col-lg-3">
+                <a class="product" href="../product/{{i.pk}}">
+                    <img class="petPhoto" src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
+                    <h6>{{i.name}}</h6>
+                    <h6>{{i.dis}}</h6>
+     
+                </a>     
+            </div>
+        {% endfor %}
     </div>
     </div>
 </body>

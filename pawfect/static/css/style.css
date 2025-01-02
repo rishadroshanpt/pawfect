@@ -39,3 +39,11 @@ body{
     color: black;
     border-bottom: 2px solid black;
 }
+.price{
+    font-weight: 700;
+    color: grey;
+}
+.offerPrice{
+    font-weight: 700;
+    color: orange;
+}

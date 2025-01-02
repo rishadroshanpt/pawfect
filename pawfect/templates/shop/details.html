@@ -12,12 +12,8 @@
         {% csrf_token %}
         
         <label for="pro">Prouct</label>
-        <!-- <input type="text" name="pro" value="{{data.pk}}" readonly><br> -->
-        <select name="pro" id="">
-            {% for i in data %}
-              <option value="{{i.name}}">{{i.name}}</option>
-            {% endfor %}
-        </select><br>
+        <input type="text" name="pro" value="{{pk}}" readonly><br>
+        
         <label for="weight">Weight</label>
         <input type="text" name="weight" placeholder="Weight"><br>
         <label for="price">Price</label>
@@ -26,7 +22,7 @@
         <input type="text" name="offerPrice" placeholder="Offer Price"><br>
         <label for="stock">Stock</label>
         <input type="text" name="stock" placeholder="Stock"><br>
-        <a type="submit" href="shop_home" class="btn btn-primary">Back</a>
+        <a type="submit" href="../shop_home" class="btn btn-primary">Back</a>
         <input type="submit" value="Submit" class="btn btn-primary">
     </form>
 </body>

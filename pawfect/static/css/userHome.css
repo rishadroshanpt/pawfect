@@ -9,6 +9,14 @@
     text-decoration: none;
     color: black;
 }
-.petLink h2{
+.petLink h2,h6{
     text-align: center;
+}
+.product{
+    text-decoration: none;
+    color: black;
+}
+.product h6{
+    text-align: center;
+
 }

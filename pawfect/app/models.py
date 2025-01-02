@@ -26,3 +26,8 @@ class Details(models.Model):
     price=models.IntegerField()
     ofr_price=models.IntegerField()
     stock=models.IntegerField()
+
+class Cart(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    pro=models.ForeignKey(Details,on_delete=models.CASCADE)
+    qty=models.IntegerField()

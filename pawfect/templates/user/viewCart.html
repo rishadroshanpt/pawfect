@@ -21,13 +21,13 @@
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" href="../user_home">HOME</a>
+                <a class="nav-link" href="../user_home">HOME</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="">FILTER</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../viewCart">CART</a>
+                <a class="nav-link active"  href="">CART</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="bookings">BOOKINGS</a>
@@ -40,23 +40,27 @@
         </div>
       </nav>
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-            <!-- <a class="product" href="product/{{i.pk}}"> -->
-            <img class="petPhoto" src="{{data.img.url}}" alt="" style="width: 500px;height: 600px;object-fit: cover;">
-        </div>
-        <div class="col-lg-6">
-            <h2>{{data.name}}</h2>
-            {% for j in data1 %}
-            <h6>{{j.weight}}</h6>
-            <h6 style="display: inline;" class="price">{{j.price}}</h6>
-            <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
-            <h6>{{j.stock}} Left</h6>
-            <a class="btn btn-primary" href="../addCart/{{j.pk}}">Add to cart</a>
-            {% endfor %}
+        {% for i in data %}
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- <a class="product" href="product/{{i.pk}}"> -->
+                <img class="petPhoto" src="{{i.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
+            </div>
+            <div class="col-lg-6">
+                <h2>{{i.details.product.name}}</h2>
+                <h4>{{i.qty}}</h4>
+                <h4>{{i.product.price}}</h4>
+                <!-- {% for j in data1 %}
+                <h6>{{j.weight}}</h6>
+                <h6 style="display: inline;" class="price">{{j.price}}</h6>
+                <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
+                <h6>{{j.stock}} Left</h6>
+                {% endfor %}
+                <a class="btn btn-primary" href="../addCart/{{data.pk}}">Add to cart</a> -->
 
+            </div>
         </div>
-    </div>
+        {% endfor %}
     </div>
 </body>
 </html>
