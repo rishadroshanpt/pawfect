@@ -23,8 +23,22 @@
               <li class="nav-item">
                 <a class="nav-link" href="../user_home">HOME</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="">FILTER</a>
+              <li class="nav-item dropdown petDrop">
+                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">FILTER</a>
+                <ul class="dropdown-menu petDrop-menu">
+                  {% for i in pet %}
+                  <li class="nav-item dropdown catDrop">
+                    <a class="nav-link " href="" role="button" data-bs-toggle="dropdown">{{i.pet}}</a>
+                    <ul class="dropdown-menu catDrop-menu">
+                      {% for j in cat %}
+                      {% if j.pet == i %}
+                      <li><a class="dropdown-item" href="products/{{j.pk}}">{{j.category}}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endfor %}
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link active"  href="">CART</a>
@@ -44,12 +58,15 @@
         <div class="row">
             <div class="col-lg-6">
                 <!-- <a class="product" href="product/{{i.pk}}"> -->
-                <img class="petPhoto" src="{{i.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
+                <img class="petPhoto" src="{{i.pro.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
             </div>
             <div class="col-lg-6">
-                <h2>{{i.details.product.name}}</h2>
-                <h4>{{i.qty}}</h4>
-                <h4>{{i.product.price}}</h4>
+                <h2>{{i.pro.product.name}}</h2>
+                <div class="cartQty">
+                  <a class="btn btn-primary" href="cartDecrement/{{i.pk}}">-</a><h4 id="qty">{{i.qty}}</h4><a class="btn btn-primary" href="cartIncrement/{{i.pk}}">+</a>
+                </div>
+                <h4 id="price">{{i.pro.ofr_price}}</h4>
+                <!-- <a href="deleteCart/{{i.pk}}">delete</a> -->
                 <!-- {% for j in data1 %}
                 <h6>{{j.weight}}</h6>
                 <h6 style="display: inline;" class="price">{{j.price}}</h6>
@@ -62,5 +79,6 @@
         </div>
         {% endfor %}
     </div>
+    
 </body>
 </html>

@@ -253,22 +253,26 @@ def user_home(req):
         data=Product.objects.all()
         data1=Details.objects.all()
         pet=Pet.objects.all()
-        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet})
+        cat=Category.objects.all()
+        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
     
 def petType(req,pid):
     if 'user' in req.session:
         data=Category.objects.filter(pet=pid)
-        # pet=Pet.objects.all()
-        return render(req,'user/petType.html',{'data':data})
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/petType.html',{'data':data,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
 
 def products(req,pid):
     if 'user' in req.session:
         data=Product.objects.filter(category=pid)
-        return render(req,'user/products.html',{'data':data})
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/products.html',{'data':data,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
     
@@ -276,7 +280,9 @@ def product(req,pid):
     if 'user' in req.session:
         data=Product.objects.get(pk=pid)
         data1=Details.objects.filter(product=pid)
-        return render(req,'user/product.html',{'data':data,'data1':data1})
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/product.html',{'data':data,'data1':data1,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
     
@@ -285,11 +291,11 @@ def addCart(req,pid):
         prod=Details.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
         try:
-            data=Cart.objects.get(user=user,product=prod)
+            data=Cart.objects.get(user=user,pro=prod)
             data.qty+=1
             data.save()
         except:
-            data=Cart.objects.create(user=user,product=prod,qty=1)
+            data=Cart.objects.create(user=user,pro=prod,qty=1)
             data.save()
         return redirect(viewCart)
     else:
@@ -299,6 +305,37 @@ def viewCart(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         data=Cart.objects.filter(user=user)
-        return render(req,'user/viewCart.html',{'data':data})
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/viewCart.html',{'data':data,'pet':pet,'cat':cat})
+    else:
+        return redirect(shop_login) 
+    
+def deleteCart(req,pid):
+    if 'user' in req.session:
+        data=Cart.objects.get(pk=pid)
+        data.delete()
+        return redirect(viewCart)
+    else:
+        return redirect(shop_login) 
+
+def cartIncrement(req,pid):
+    if 'user' in req.session:
+        data=Cart.objects.get(pk=pid)
+        data.qty+=1
+        data.save()
+        return redirect(viewCart)
+    else:
+        return redirect(shop_login) 
+       
+def cartDecrement(req,pid):
+    if 'user' in req.session:
+        data=Cart.objects.get(pk=pid)
+        if(data.qty>0):
+            data.qty-=1
+            data.save()
+        if data.qty==0:
+            data.delete()
+        return redirect(viewCart)
     else:
         return redirect(shop_login) 

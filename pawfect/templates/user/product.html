@@ -23,8 +23,22 @@
               <li class="nav-item">
                 <a class="nav-link active" href="../user_home">HOME</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="">FILTER</a>
+              <li class="nav-item dropdown petDrop">
+                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">FILTER</a>
+                <ul class="dropdown-menu petDrop-menu">
+                  {% for i in pet %}
+                  <li class="nav-item dropdown catDrop">
+                    <a class="nav-link " href="" role="button" data-bs-toggle="dropdown">{{i.pet}}</a>
+                    <ul class="dropdown-menu catDrop-menu">
+                      {% for j in cat %}
+                      {% if j.pet == i %}
+                      <li><a class="dropdown-item" href="../products/{{j.pk}}">{{j.category}}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endfor %}
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../viewCart">CART</a>

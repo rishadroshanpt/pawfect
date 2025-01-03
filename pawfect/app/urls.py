@@ -28,4 +28,7 @@ urlpatterns=[
     path('petType/<pid>',views.petType),
     path('addCart/<pid>',views.addCart),
     path('viewCart',views.viewCart),
+    path('deleteCart/<pid>',views.deleteCart),
+    path('cartIncrement/<pid>',views.cartIncrement),
+    path('cartDecrement/<pid>',views.cartDecrement),
 ]
