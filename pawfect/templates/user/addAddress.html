@@ -31,7 +31,7 @@
                 <ul class="dropdown-menu catDrop-menu">
                   {% for j in cat %}
                   {% if j.pet == i %}
-                  <li><a class="dropdown-item" href="../products/{{j.pk}}">{{j.category}}</a></li>
+                  <li><a class="dropdown-item" href="products/{{j.pk}}">{{j.category}}</a></li>
                   {% endif %}
                   {% endfor %}
                 </ul>
@@ -40,45 +40,50 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../viewCart">CART</a>
+            <a class="nav-link" href="viewCart">CART</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../bookings">Bookings</a>
+            <a class="nav-link" href="bookings">Bookings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../logout">Log out</a>
+            <a class="nav-link" href="logout">Log out</a>
           </li>    
         </ul>
       </div>
     </div>
   </nav>
-    <div class="container">
-        <!-- <div class="row">
-            {% for i in pet %}
-                <div class="col-lg-3">
-                    <a href="petType/{{i.pk}}">
-                        <img src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
-                        <h2>{{i.pet}}</h2>
-                    </a>
-                   
-                </div>
-            {% endfor %}
-        </div> -->
-
-
-
-        <div class="row">
-          <div class="row">
-            {% for i in data %}
-                <div class="col-lg-3">
-                    <a class="petLink" href="../products/{{i.pk}}">
-                        <img class="petPhoto" src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
-                        <h2>{{i.category}}</h2>
-                    </a>     
-                </div>
-            {% endfor %}
+<h1>Add address </h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="mb-2">
+          <label for="name" class="form-label">Your full name:</label>
+          <input type="text" class="form-control" placeholder="Enter your name" name="name">
         </div>
+        <div class="mb-2">
+          <label for="phn" class="form-label">Phone number:</label>
+          <input type="number" class="form-control" placeholder="Enter phone number" name="phn">
         </div>
-    </div>
+        <div class="mb-2">
+          <label for="house" class="form-label">House/building:</label>
+          <input type="text" name="house" id="" placeholder="Enter your house/building name/no.">
+        </div>
+        <div class="mb-2">
+          <label for="street" class="form-label">Street name:</label>
+          <input type="text" class="form-control" placeholder="Enter street details" name="street">
+        </div>
+        <div class="mb-2">
+            <label for="pin" class="form-label">PIN :</label>
+            <input type="number" class="form-control" placeholder="Enter PIN" name="pin">
+        </div>
+        <div class="mb-2">
+            <label for="state" class="form-label">PIN :</label>
+            <input type="text" class="form-control" placeholder="Enter state" name="state">
+        </div>
+        <div class="form-check mb-2">
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+  </form>
 </body>
 </html>

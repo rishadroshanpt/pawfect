@@ -31,4 +31,6 @@ urlpatterns=[
     path('deleteCart/<pid>',views.deleteCart),
     path('cartIncrement/<pid>',views.cartIncrement),
     path('cartDecrement/<pid>',views.cartDecrement),
+    path('buyNow/<pid>',views.buyNow),
+
 ]

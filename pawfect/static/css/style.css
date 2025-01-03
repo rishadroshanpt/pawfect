@@ -20,7 +20,7 @@ body{
     padding: 15px 20px;
     position: relative;
 }
-.nav-link:after{
+/* .nav-link:after{
     bottom: 0;
     content: "";
     display: block;
@@ -30,10 +30,10 @@ body{
     background: #fff;
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
-}
-.nav-link:hover:after{
-    width: 100%; 
-    left: 0; 
+} */
+.nav-link:hover{
+    color: black;
+    border-bottom: 2px solid black;
 }
 .active{
     color: black;
@@ -41,9 +41,9 @@ body{
 }
 .price{
     font-weight: 700;
-    color: grey;
+    color: rgba(128, 128, 128, 0.238);
 }
 .offerPrice{
     font-weight: 700;
-    color: orange;
+    color: rgb(255, 132, 0);
 }

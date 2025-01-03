@@ -63,10 +63,14 @@
             <h2>{{data.name}}</h2>
             {% for j in data1 %}
             <h6>{{j.weight}}</h6>
-            <h6 style="display: inline;" class="price">{{j.price}}</h6>
-            <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
+            <div>
+              <h6 style="display: inline;" class="price">{{j.price}}</h6><br>
+              <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
+            </div>
+
             <h6>{{j.stock}} Left</h6>
             <a class="btn btn-primary" href="../addCart/{{j.pk}}">Add to cart</a>
+            <a class="btn btn-danger" href="../buyNow/{{j.pk}}">Buy Now</a>
             {% endfor %}
 
         </div>

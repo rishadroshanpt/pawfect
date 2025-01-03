@@ -31,3 +31,12 @@ class Cart(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     pro=models.ForeignKey(Details,on_delete=models.CASCADE)
     qty=models.IntegerField()
+
+class Address(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.TextField()
+    phn=models.IntegerField()
+    house=models.TextField()
+    street=models.TextField()
+    pin=models.IntegerField()
+    state=models.TextField()

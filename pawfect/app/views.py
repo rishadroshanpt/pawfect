@@ -297,6 +297,8 @@ def addCart(req,pid):
         except:
             data=Cart.objects.create(user=user,pro=prod,qty=1)
             data.save()
+        prod.stock-=1
+        prod.save()
         return redirect(viewCart)
     else:
         return redirect(shop_login)  
@@ -323,6 +325,9 @@ def cartIncrement(req,pid):
     if 'user' in req.session:
         data=Cart.objects.get(pk=pid)
         data.qty+=1
+        pro=data.pro
+        pro.stock-=1
+        pro.save()
         data.save()
         return redirect(viewCart)
     else:
@@ -333,9 +338,37 @@ def cartDecrement(req,pid):
         data=Cart.objects.get(pk=pid)
         if(data.qty>0):
             data.qty-=1
+            pro=data.pro
+            pro.stock+=1
+            pro.save()
             data.save()
         if data.qty==0:
             data.delete()
         return redirect(viewCart)
+    else:
+        return redirect(shop_login) 
+    
+def buyNow(req,pid):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        try:
+            data=Address.objects.filter(user=user)
+            if data:
+                return render(req,'user/orderSummary.html',{'prod':prod})
+        except:
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                phn=req.POST['phn']
+                house=req.POST['house']
+                street=req.POST['street']
+                pin=req.POST['pin']
+                state=req.POST['state']
+                data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+                data.save()
+                return render(req,'user/orderSummary.html',{'prod':prod})
+            else:
+                return render(req,"user/addAddress.html")
     else:
         return redirect(shop_login) 
