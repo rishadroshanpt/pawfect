@@ -47,7 +47,7 @@ body{
     font-weight: 700;
     color: rgb(255, 132, 0);
 }
-.discount{
+.offerPer,.discount{
     font-weight: 700;
     color: rgb(38, 255, 0);
 }

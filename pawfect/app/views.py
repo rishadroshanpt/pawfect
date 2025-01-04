@@ -173,11 +173,14 @@ def details(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
             product=req.POST['pro']
-            weight=req.POST['weight']
+            dis=req.POST['dis']
             price=req.POST['price']
-            ofrPrice=req.POST['offerPrice']
+            ofrPer=req.POST['offerPer']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(id=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            p=int(price)
+            op=int(ofrPer)
+            ofrPrice=float(p-((p*op)/100))
+            data=Details.objects.create(product=Product.objects.get(id=product),dis=dis,price=price,ofr_per=ofrPer,ofr_price=ofrPrice,stock=stock)
             data.save()
             return redirect("details",pid=pid)
         else:
@@ -214,11 +217,14 @@ def edit_details(req,pid):
     if 'eshop' in req.session:
         if req.method=='POST':
             product=req.POST['pro']
-            weight=req.POST['weight']
+            dis=req.POST['dis']
             price=req.POST['price']
-            ofrPrice=req.POST['offerPrice']
+            ofrPer=req.POST['offerPer']
             stock=req.POST['stock']
-            data=Details.objects.create(product=Product.objects.get(pk=product),weight=weight,price=price,ofr_price=ofrPrice,stock=stock)
+            p=int(price)
+            op=int(ofrPer)
+            ofrPrice=float(p-((p*op)/100))
+            data=Details.objects.create(product=Product.objects.get(pk=product),dis=dis,price=price,ofr_per=ofrPer,ofr_price=ofrPrice,stock=stock)
             data.save()
             return redirect("edit_details",pid=pid)
         else:
@@ -241,9 +247,9 @@ def delete_prod(req,pid):
     data.delete()
     return redirect(shop_home)
 
-# def bookings(req):
-#     buy=Buy.objects.all()[::-1]
-#     return render(req,'shop/bookings.html',{'buy':buy})
+def booking(req):
+    data=Bookings.objects.all()[::-1]
+    return render(req,'shop/bookings.html',{'data':data})
 
 
 # -----------------------------------shop------------------------------
@@ -293,9 +299,11 @@ def addCart(req,pid):
         try:
             data=Cart.objects.get(user=user,pro=prod)
             data.qty+=1
+            data.price=data.pro.ofr_price*data.qty
             data.save()
         except:
-            data=Cart.objects.create(user=user,pro=prod,qty=1)
+            price=prod.ofr_price
+            data=Cart.objects.create(user=user,pro=prod,qty=1,price=price)
             data.save()
         prod.stock-=1
         prod.save()
@@ -325,6 +333,7 @@ def cartIncrement(req,pid):
     if 'user' in req.session:
         data=Cart.objects.get(pk=pid)
         data.qty+=1
+        data.price=data.pro.ofr_price*data.qty
         pro=data.pro
         pro.stock-=1
         pro.save()
@@ -338,6 +347,7 @@ def cartDecrement(req,pid):
         data=Cart.objects.get(pk=pid)
         if(data.qty>0):
             data.qty-=1
+            data.price=data.pro.ofr_price*data.qty
             pro=data.pro
             pro.stock+=1
             pro.save()
@@ -351,13 +361,12 @@ def cartDecrement(req,pid):
 def buyNow(req,pid):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
-        discount=prod.price-prod.ofr_price
+        discount=int(prod.price-prod.ofr_price)
         user=User.objects.get(username=req.session['user'])
-        try:
-            data=Address.objects.filter(user=user)
-            if data:
-                return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
-        except:
+        data=Address.objects.filter(user=user)
+        if data:
+            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+        else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
                 name=req.POST['name']
@@ -378,5 +387,25 @@ def payment(req,pid):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
         return render(req,'user/payment.html',{'prod':prod})
+    else:
+        return redirect(shop_login) 
+    
+def book(req,pid):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        data=Bookings.objects.create(user=user,pro=prod)
+        data.save()
+        return redirect(bookings)
+    else:
+        return redirect(shop_login)
+    
+def bookings(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Bookings.objects.filter(user=user)
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/bookings.html',{'data':data,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login) 

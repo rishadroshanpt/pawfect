@@ -22,15 +22,17 @@ class Product(models.Model):
 
 class Details(models.Model):
     product=models.ForeignKey(Product, on_delete=models.CASCADE)
-    weight=models.IntegerField()
+    dis=models.TextField()
     price=models.IntegerField()
-    ofr_price=models.IntegerField()
+    ofr_per=models.FloatField()
+    ofr_price=models.FloatField()
     stock=models.IntegerField()
 
 class Cart(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     pro=models.ForeignKey(Details,on_delete=models.CASCADE)
     qty=models.IntegerField()
+    price=models.FloatField()
 
 class Address(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -40,3 +42,7 @@ class Address(models.Model):
     street=models.TextField()
     pin=models.IntegerField()
     state=models.TextField()
+    
+class Bookings(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    pro=models.ForeignKey(Details,on_delete=models.CASCADE)

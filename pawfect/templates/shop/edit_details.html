@@ -44,9 +44,10 @@
                     <div class="card" style="width:300px">
                         <div class="card-body">
                         <h4 class="card-title">PRODUCT NAME : {{i.product.name}}</h4>
-                        <p class="card-text">PRODUCT WEIGHT : {{i.weight}}</p>
+                        <p class="card-text">PRODUCT DISCRIPTION : {{i.dis}}</p>
                         <p class="card-text">PRODUCT PRICE : {{i.price}}</p>
                         <p class="card-text">PRODUCT OFFER PRICE : {{i.ofr_price}}</p>
+                        <p class="card-text">PRODUCT OFFER PERCENTAGE : {{i.ofr_per}}</p>
                         <p class="card-text">PRODUCT STOCK : {{i.stock}}</p>
                         <!-- <a href="#" class="btn btn-primary">EDIT</a> -->
                         <a href="../delete_details/{{i.pk}}" class="btn btn-danger">DELETE</a>
@@ -58,14 +59,14 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <h4>ADD NEW DETAILS</h4>
-                    <label for="weight">Prouct</label>
+                    <label for="pro">Prouct</label>
                     <input type="number" name="pro" value="{{data1.pk}}" readonly><br>
-                    <label for="weight">Weight</label>
-                    <input type="text" name="weight" placeholder="Weight"><br>
+                    <label for="dis">Discription</label>
+                    <input type="text" name="dis" placeholder="Discription"><br>
                     <label for="price">Price</label>
-                    <input type="text" name="price" placeholder="Price"><br>
-                    <label for="offerPrice">Offer Price</label>
-                    <input type="text" name="offerPrice" placeholder="Offer Price"><br>
+                    <input type="number" name="price" placeholder="Price"><br>
+                    <label for="offerPer">Offer percentage</label>
+                    <input type="number" name="offerPer" placeholder="Offer "><br>
                     <label for="stock">Stock</label>
                     <input type="text" name="stock" placeholder="Stock"><br>
                     <a type="submit" href="../shop_home" class="btn btn-primary">Back</a>

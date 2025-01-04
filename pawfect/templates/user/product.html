@@ -44,10 +44,10 @@
                 <a class="nav-link" href="../viewCart">CART</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="bookings">BOOKINGS</a>
+                <a class="nav-link" href="../bookings">BOOKINGS</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="logout">Log out</a>
+                <a class="nav-link" href="../logout">Log out</a>
               </li>    
             </ul>
           </div>
@@ -62,9 +62,10 @@
         <div class="col-lg-6">
             <h2>{{data.name}}</h2>
             {% for j in data1 %}
-            <h6>{{j.weight}}</h6>
+            <h6>{{j.dis}}</h6>
             <div>
               <h6 style="display: inline;" class="price">{{j.price}}</h6><br>
+              <h6 style="display: inline;" class="offerPer">-{{j.ofr_per}}%</h6><br>
               <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
             </div>
 
