@@ -351,11 +351,12 @@ def cartDecrement(req,pid):
 def buyNow(req,pid):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
+        discount=prod.price-prod.ofr_price
         user=User.objects.get(username=req.session['user'])
         try:
             data=Address.objects.filter(user=user)
             if data:
-                return render(req,'user/orderSummary.html',{'prod':prod})
+                return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
         except:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -367,8 +368,15 @@ def buyNow(req,pid):
                 state=req.POST['state']
                 data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
                 data.save()
-                return render(req,'user/orderSummary.html',{'prod':prod})
+                return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
             else:
                 return render(req,"user/addAddress.html")
+    else:
+        return redirect(shop_login) 
+    
+def payment(req,pid):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        return render(req,'user/payment.html',{'prod':prod})
     else:
         return redirect(shop_login) 
