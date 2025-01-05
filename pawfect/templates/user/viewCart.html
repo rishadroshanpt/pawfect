@@ -54,6 +54,7 @@
         </div>
       </nav>
     <div class="container">
+      {% if data %}
         {% for i in data %}
         <div class="row">
             <div class="col-lg-6">
@@ -70,7 +71,14 @@
             </div>
         </div>
         {% endfor %}
-    </div>
-    
+        <div class="row">
+          <div class="col-lg-6">
+            <h2>{{total}}</h2>
+          </div>
+          <div class="col-lg-6">
+            <a class="btn btn-primary" href="buyAll">CHECKOUT CART</a>
+          </div>
+        </div>
+      {% endif %}
 </body>
 </html>

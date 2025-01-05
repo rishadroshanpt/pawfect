@@ -315,9 +315,12 @@ def viewCart(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         data=Cart.objects.filter(user=user)
+        total=0
+        for i in data:
+            total+=i.price
         pet=Pet.objects.all()
         cat=Category.objects.all()
-        return render(req,'user/viewCart.html',{'data':data,'pet':pet,'cat':cat})
+        return render(req,'user/viewCart.html',{'data':data,'pet':pet,'cat':cat,'total':total})
     else:
         return redirect(shop_login) 
     
@@ -385,8 +388,9 @@ def buyNow(req,pid):
     
 def payment(req,pid):
     if 'user' in req.session:
-        prod=Details.objects.get(pk=pid)
-        return render(req,'user/payment.html',{'prod':prod})
+        data=Details.objects.get(pk=pid)
+        price=data.ofr_price
+        return render(req,'user/payment.html',{'price':price,'data':data})
     else:
         return redirect(shop_login) 
     
@@ -396,6 +400,20 @@ def book(req,pid):
         user=User.objects.get(username=req.session['user'])
         data=Bookings.objects.create(user=user,pro=prod)
         data.save()
+        prod.stock-=1
+        prod.save()
+        return redirect(bookings)
+    else:
+        return redirect(shop_login)
+    
+def book2(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        for i in cart:
+            data=Bookings.objects.create(user=i.user,pro=i.pro)
+            data.save()
+        cart.delete()
         return redirect(bookings)
     else:
         return redirect(shop_login)
@@ -407,5 +425,51 @@ def bookings(req):
         pet=Pet.objects.all()
         cat=Category.objects.all()
         return render(req,'user/bookings.html',{'data':data,'pet':pet,'cat':cat})
+    else:
+        return redirect(shop_login) 
+    
+def buyAll(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        discount=0
+        for i in cart:
+            discount+=(float(i.pro.price-i.pro.ofr_price)*i.qty)
+        price=0
+        for i in cart:
+            price+=(i.pro.price)*i.qty
+        total=price-discount
+        data=Address.objects.filter(user=user)
+        if data:
+            return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+        else:
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                phn=req.POST['phn']
+                house=req.POST['house']
+                street=req.POST['street']
+                pin=req.POST['pin']
+                state=req.POST['state']
+                data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+                data.save()
+                return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+            else:
+                return render(req,"user/addAddress.html")
+    else:
+        return redirect(shop_login) 
+    
+def payment2(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        discount=0
+        for i in cart:
+            discount+=(float(i.pro.price-i.pro.ofr_price)*i.qty)
+        price=0
+        for i in cart:
+            price+=(i.pro.price)*i.qty
+        total=price-discount
+        return render(req,'user/payment2.html',{'price':total})
     else:
         return redirect(shop_login) 

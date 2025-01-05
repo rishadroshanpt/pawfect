@@ -52,9 +52,41 @@
       </div>
     </div>
   </nav>
-    <h1>payment </h1>
-              <h3 class="offerPrice">{{price}}</h3>
-              <a class="btn btn-primary" href="../book/{{data.pk}}">CONFIRM PAYMENT</a>
+    <h1>Order summary</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% for i in cart %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{{i.pro.product.img.url}}" alt="" width="300px" height="300px">
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>{{i.pro.product.name}}</h3>
+                        <h3>{{i.qty}}</h3>
+                        <h3 class="price">{{i.pro.price}}</h3>
+                        <h3 class="offerPrice">{{i.pro.ofr_price}}</h3>
+                        <h3 class="offerPrice">{{i.price}}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-4">
+                <label for="">Shipping address : </label><br>
+                <select name="address" id="address">
+                  {% for i in data %}
+                    <option value="{{i}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
+                  {% endfor %}
+                </select>
+                <h3 class="price">Total is {{price}} rupees</h3>
 
+                <h3 class="discount">You save a total of {{discount}} rupees</h3>
+                <h3 class="offerPrice">The total amount payable is {{total}} rupees</h3>
+
+    
+              <a href="../payment2">CONFIRM</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
