@@ -38,5 +38,6 @@ urlpatterns=[
     path('buyAll',views.buyAll),
     path('payment2',views.payment2),
     path('book2',views.book2),
+    path('deleteBookings/<pid>',views.deleteBookings),
 
 ]

@@ -46,3 +46,5 @@ class Address(models.Model):
 class Bookings(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     pro=models.ForeignKey(Details,on_delete=models.CASCADE)
+    qty=models.TextField()
+    date=models.DateField(auto_now_add=True)

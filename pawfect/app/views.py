@@ -288,7 +288,11 @@ def product(req,pid):
         data1=Details.objects.filter(product=pid)
         pet=Pet.objects.all()
         cat=Category.objects.all()
-        return render(req,'user/product.html',{'data':data,'data1':data1,'pet':pet,'cat':cat})
+        data2=Details.objects.get(product=pid,pk=data1[0].pk)
+        if req.GET.get('dis'):
+            dis=req.GET.get('dis')
+            data2=Details.objects.get(product=pid,pk=dis)
+        return render(req,'user/product.html',{'data':data,'data1':data1,'data2':data2,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
     
@@ -335,12 +339,13 @@ def deleteCart(req,pid):
 def cartIncrement(req,pid):
     if 'user' in req.session:
         data=Cart.objects.get(pk=pid)
-        data.qty+=1
-        data.price=data.pro.ofr_price*data.qty
-        pro=data.pro
-        pro.stock-=1
-        pro.save()
-        data.save()
+        if data.pro.stock>0:
+            data.qty+=1
+            data.price=data.pro.ofr_price*data.qty
+            pro=data.pro
+            pro.stock-=1
+            pro.save()
+            data.save()
         return redirect(viewCart)
     else:
         return redirect(shop_login) 
@@ -398,7 +403,7 @@ def book(req,pid):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
-        data=Bookings.objects.create(user=user,pro=prod)
+        data=Bookings.objects.create(user=user,pro=prod,qty=1)
         data.save()
         prod.stock-=1
         prod.save()
@@ -411,7 +416,7 @@ def book2(req):
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
         for i in cart:
-            data=Bookings.objects.create(user=i.user,pro=i.pro)
+            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty)
             data.save()
         cart.delete()
         return redirect(bookings)
@@ -473,3 +478,11 @@ def payment2(req):
         return render(req,'user/payment2.html',{'price':total})
     else:
         return redirect(shop_login) 
+    
+def deleteBookings(req,pid):
+    if 'user' in req.session:
+        data=Bookings.objects.get(pk=pid)
+        data.delete()
+        return redirect(bookings)
+    else:
+        return redirect(shop_login)

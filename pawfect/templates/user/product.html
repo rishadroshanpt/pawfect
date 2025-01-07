@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
 
 </head>
 <body>
@@ -61,21 +62,38 @@
         </div>
         <div class="col-lg-6">
             <h2>{{data.name}}</h2>
+            <h4 class="price">{{data2.price}}</h4>
+            <h4 class="offerPer">- {{data2.ofr_per}}%</h4>
+            <h4 class="offerPrice">{{data2.ofr_price}}</h4>
+            {% if data2.stock > 0 %}
+            <h4 class=""> ONLY {{data2.stock}} LEFT</h4>
+            {% else %}
+            <h4>OUT OF STOCK </h4>
+            {% endif %}
             {% for j in data1 %}
-            <h6>{{j.dis}}</h6>
-            <div>
-              <h6 style="display: inline;" class="price">{{j.price}}</h6><br>
-              <h6 style="display: inline;" class="offerPer">-{{j.ofr_per}}%</h6><br>
-              <h6 style="display: inline;" class="offerPrice">{{j.ofr_price}}</h6>
-            </div>
+            <label class="" for="">
+              <input type="radio" onchange="get_correct_price('{{j.pk}}')" name="select" {% if data2.pk == j.pk %} checked {% endif %}  id="">
+              <div class="label">{{j.dis}}</div>
+            </label>
+            {% endfor %} <br>
+            {% if data2.stock > 0 %}
+            <a class="btn btn-primary" href="../addCart/{{data2.pk}}">Add to cart</a>
+            <a class="btn btn-danger" href="../buyNow/{{data2.pk}}">Buy Now</a>
+            {% else %}
+            
+            {% endif %}
+            
 
-            <h6>{{j.stock}} Left</h6>
-            <a class="btn btn-primary" href="../addCart/{{j.pk}}">Add to cart</a>
-            <a class="btn btn-danger" href="../buyNow/{{j.pk}}">Buy Now</a>
-            {% endfor %}
 
         </div>
     </div>
     </div>
+
+
+  <script>
+    function get_correct_price(dis){
+      window.location.href = window.location.pathname + `?dis=${dis}`
+    }
+  </script>
 </body>
 </html>
