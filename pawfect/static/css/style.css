@@ -20,17 +20,6 @@ body{
     padding: 15px 20px;
     position: relative;
 }
-/* .nav-link:after{
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: #fff;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-} */
 .nav-link:hover{
     color: black;
     border-bottom: 2px solid black;

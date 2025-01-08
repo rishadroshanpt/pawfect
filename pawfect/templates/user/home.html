@@ -17,7 +17,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active" href="user_home">Home</a>
@@ -47,7 +47,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="logout">Log out</a>
-          </li>    
+          </li>
         </ul>
       </div>
     </div>
@@ -64,29 +64,6 @@
             {% endfor %}
         </div>
 
-
-        <!-- <div class="row">
-            {% for i in data %}
-            <div class="col-lg-3">
-                <a href="product/{{i.pk}}">
-                    <div class="card">
-                        <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="height: 400px; width: 100%;object-fit: cover;">
-                        <div class="card-body">
-                            <h4 class="card-title">{{i.name}}</h4>
-                            {% for j in data1 %}
-                                {% if j.product == i %}
-                                    <h4 class="card-title">{{j.weight}}gm</h4>
-                                    <s><p class="card-text">₹{{j.price}}</p></s>
-                                    <h4 class="card-title">₹{{j.ofr_price}}</h4>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </a>
-                
-            </div>
-            {% endfor %}
-        </div> -->
     </div>
 </body>
 </html>

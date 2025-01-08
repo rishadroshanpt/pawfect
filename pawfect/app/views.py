@@ -6,26 +6,25 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings   
-from django.http import HttpResponse
+import math,random
 
 
 # Create your views here.
 def shop_login(req):
     if 'eshop' in req.session:
         return redirect(shop_home)
-    # if 'user' in req.session:
-    #     return redirect(user_home)
+    if 'user' in req.session:
+        return redirect(user_home)
     if req.method=='POST':
         uname=req.POST['uname']
         password=req.POST['passwd']
         data=authenticate(username=uname,password=password)
         if data:
+            login(req,data)
             if data.is_superuser:
-                login(req,data)
                 req.session['eshop']=uname   #create session
                 return redirect(shop_home)
             else:
-                login(req,data)
                 req.session['user']=uname   #create session
                 return redirect(user_home)
         else:
@@ -35,22 +34,42 @@ def shop_login(req):
     else:
         return render(req,'login.html')
     
+def OTP(req):
+    digits = "0123456789"
+    OTP = ""
+    for i in range(6) :
+        OTP += digits[math.floor(random.random() * 10)]
+    return OTP
+
 def register(req):
     if req.method=='POST':
         name=req.POST['name']
         email=req.POST['email']
         password=req.POST['password']
-        # send_mail('register', 'new act', settings.EMAIL_HOST_USER, [email])
-
-        try:
-            data=User.objects.create_user(first_name=name,email=email,password=password,username=email)
-            data.save()
-            return redirect(shop_login)
-        except:
-            messages.warning(req,'User already exists.')
+        otp=OTP(req)
+        if User.objects.filter(email=email).exists():
+            messages.error(req, "Email is already in use.")
             return redirect(register)
+        else:
+            send_mail('Your registration OTP ,',f"OTP for registration is {otp}", settings.EMAIL_HOST_USER, [email])
+            messages.success(req, "Registration successful. Please check your email for OTP.")
+            return redirect("validate",name=name,password=password,email=email,otp=otp)
     else:
         return render(req,'register.html')
+
+def validate(req,name,password,email,otp):
+    if req.method=='POST':
+        uotp=req.POST['uotp']
+        if uotp==otp:
+            data=User.objects.create_user(first_name=name,email=email,password=password,username=email)
+            data.save()
+            messages.success(req, "OTP verified successfully. You can now log in.")
+            return redirect(shop_login)
+        else:
+            messages.error(req, "Invalid OTP. Please try again.")
+            return redirect("validate",name=name,password=password,email=email,otp=otp)
+    else:
+        return render(req,'validate.html',{'name':name,'pass':password,'email':email,'otp':otp})
 
 def shp_logout(req):
     req.session.flush()          #delete session
@@ -403,7 +422,7 @@ def book(req,pid):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
-        data=Bookings.objects.create(user=user,pro=prod,qty=1)
+        data=Bookings.objects.create(user=user,pro=prod,qty=1,price=prod.ofr_price)
         data.save()
         prod.stock-=1
         prod.save()
@@ -416,7 +435,7 @@ def book2(req):
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
         for i in cart:
-            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty)
+            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty,price=i.price)
             data.save()
         cart.delete()
         return redirect(bookings)
@@ -426,7 +445,7 @@ def book2(req):
 def bookings(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
-        data=Bookings.objects.filter(user=user)
+        data=Bookings.objects.filter(user=user)[: : -1]
         pet=Pet.objects.all()
         cat=Category.objects.all()
         return render(req,'user/bookings.html',{'data':data,'pet':pet,'cat':cat})

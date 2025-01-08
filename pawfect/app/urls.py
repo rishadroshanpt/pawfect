@@ -4,6 +4,7 @@ from . import views
 urlpatterns=[
     path('',views.shop_login),
     path('register',views.register),
+    path('validate/<name>/<password>/<email>/<otp>',views.validate,name="validate"),
     path('shop_home',views.shop_home),
     path('logout',views.shp_logout),
     # path('add_category',views.add_category),

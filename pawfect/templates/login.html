@@ -13,9 +13,7 @@
     <form action="" method="post">
         {% csrf_token %}
         <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="">
-        <!-- <label for="">Username</label> -->
         <input type="text" name="uname" id="" placeholder="Username"><br>
-        <!-- <label for="">Password</label> -->
         <input type="password" name="passwd" id="" placeholder="Password"><br>
         <input type="submit" class="btn" value="LOGIN">
         <p>Don't have a account,<a href="register">Create a account.</a></p>

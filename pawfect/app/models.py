@@ -47,4 +47,5 @@ class Bookings(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     pro=models.ForeignKey(Details,on_delete=models.CASCADE)
     qty=models.TextField()
+    price=models.FloatField()
     date=models.DateField(auto_now_add=True)
