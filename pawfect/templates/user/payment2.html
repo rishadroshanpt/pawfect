@@ -54,7 +54,13 @@
   </nav>
     <h1>payment </h1>
               <h3 class="offerPrice">{{price}}</h3>
-              <a class="btn btn-primary" href="../book2">CONFIRM PAYMENT</a>
+              <h4>{{address.name}}</h4>
+              <h4>{{address.house}}</h4>
+              <h4>{{address.street}}</h4>
+              <h4>{{address.state}}</h4>
+              <h4>{{address.pin}}</h4>
+              <h4>{{address.phn}}</h4>
+              <a class="btn btn-primary" href="../book2/{{address.pk}}">CONFIRM PAYMENT</a>
 
 </body>
 </html>

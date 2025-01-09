@@ -49,8 +49,9 @@
                         <p class="card-text">PRODUCT OFFER PRICE : {{i.ofr_price}}</p>
                         <p class="card-text">PRODUCT OFFER PERCENTAGE : {{i.ofr_per}}</p>
                         <p class="card-text">PRODUCT STOCK : {{i.stock}}</p>
-                        <!-- <a href="#" class="btn btn-primary">EDIT</a> -->
                         <a href="../delete_details/{{i.pk}}" class="btn btn-danger">DELETE</a>
+                        <a href="../edit_detail/{{i.pk}}" class="btn btn-primary">EDIT</a>
+
                         </div>
                     </div>
                 {% endfor %}

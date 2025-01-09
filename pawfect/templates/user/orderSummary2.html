@@ -72,21 +72,24 @@
                 {% endfor %}
             </div>
             <div class="col-lg-4">
+              <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <label for="">Shipping address : </label><br>
                 <select name="address" id="address">
                   {% for i in data %}
-                    <option value="{{i}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
+                    <option value="{{i.pk}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
                   {% endfor %}
                 </select>
-              <a href="../address">Add new address + </a>
+              <a href="../../../address">Add new address + </a>
 
                 <h3 class="price">Total is {{price}} rupees</h3>
 
                 <h3 class="discount">You save a total of {{discount}} rupees</h3>
                 <h3 class="offerPrice">The total amount payable is {{total}} rupees</h3>
 
-    
-              <a href="../payment2">CONFIRM</a>
+                <button type="submit" class="btn btn-primary">CONFIRM</button>
+              </form>   
+              <!-- <a href="../payment2">CONFIRM</a> -->
             </div>
         </div>
     </div>

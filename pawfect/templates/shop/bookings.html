@@ -19,7 +19,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="shop_home">Home</a>
+            <a class="nav-link " href="shop_home">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="add_pet">Add Pet or Category</a>
@@ -28,7 +28,7 @@
             <a class="nav-link" href="add_prod">Add Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="booking">Bookings</a>
+            <a class="nav-link active" href="booking">Bookings</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="logout">Log out</a>
@@ -41,7 +41,6 @@
         {% for i in data %}
         <div class="row">
             <div class="col-lg-6">
-                <!-- <a class="product" href="product/{{i.pk}}"> -->
                 <img class="petPhoto" src="{{i.pro.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
             </div>
             <div class="col-lg-6">
@@ -49,6 +48,7 @@
                 <h2>{{i.qty}}</h2>
                 <h2>{{i.date}}</h2>
                 <h2>{{i.user.first_name}}</h2>
+                <h2>{{i.address.name}}</h2>
             </div>
         </div>
         {% endfor %}

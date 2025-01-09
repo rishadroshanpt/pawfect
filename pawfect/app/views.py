@@ -252,6 +252,26 @@ def edit_details(req,pid):
             return render(req,'shop/edit_details.html',{'data':data,'data1':data1})
     else:
         return redirect(shop_login)
+    
+def edit_detail(req,pid):
+    if 'eshop' in req.session:
+        if req.method=='POST':
+            price=req.POST['price']
+            ofrPer=req.POST['offerPer']
+            stock=req.POST['stock']
+            p=int(price)
+            op=int(ofrPer)
+            ofrPrice=float(p-((p*op)/100))
+            Details.objects.filter(pk=pid).update(price=price,ofr_per=ofrPer,ofr_price=ofrPrice,stock=stock)
+            data=Details.objects.get(pk=pid)
+            data=data.product.pk
+            return redirect("edit_details",pid=data)
+        else:
+            data=Details.objects.get(pk=pid)
+            return render(req,'shop/editDetails.html',{'data':data})
+    else:
+        return redirect(shop_login)
+
 
 def delete_details(req,pid):
     data=Details.objects.get(pk=pid)
@@ -450,12 +470,12 @@ def book(req,pid,address):
     else:
         return redirect(shop_login)
     
-def book2(req):
+def book2(req,address):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
         for i in cart:
-            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty,price=i.price)
+            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty,price=i.price,address=Address.objects.get(pk=address))
             data.save()
         cart.delete()
         return redirect(bookings)
@@ -486,7 +506,7 @@ def buyAll(req):
         data=Address.objects.filter(user=user)
         if data:
             # return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
-            return redirect("orderSummary2",cart=cart,data=data,discount=discount,price=price,total=total)
+            return redirect("orderSummary2",discount=discount,price=price,total=total)
         else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -498,29 +518,28 @@ def buyAll(req):
                 state=req.POST['state']
                 data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
                 data.save()
-                return redirect("orderSummary2",cart=cart,data=data,discount=discount,price=price,total=total)
+                return redirect("orderSummary2",discount=discount,price=price,total=total)
             else:
                 return render(req,"user/addAddress.html")
     else:
         return redirect(shop_login) 
     
-def orderSummary2(req,cart,data,discount,price,total):
+def orderSummary2(req,discount,price,total):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
+        cart=Cart.objects.filter(user=user)
         if req.method == 'POST':
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
-        print(prod.pk)
+            return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total,'discount':discount})
         addr=addr.pk
-        
-        return redirect("payment",pid=prod.pk,address=addr)    
+        return redirect("payment2",address=addr)    
     else:
         return redirect(shop_login)
 
-def payment2(req):
+def payment2(req,address):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
@@ -531,7 +550,8 @@ def payment2(req):
         for i in cart:
             price+=(i.pro.price)*i.qty
         total=price-discount
-        return render(req,'user/payment2.html',{'price':total})
+        address=Address.objects.get(pk=address)
+        return render(req,'user/payment2.html',{'price':total,'address':address})
     else:
         return redirect(shop_login) 
     
