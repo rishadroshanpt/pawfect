@@ -275,11 +275,12 @@ def booking(req):
 
 def user_home(req):
     if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
         data=Product.objects.all()
         data1=Details.objects.all()
         pet=Pet.objects.all()
         cat=Category.objects.all()
-        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat})
+        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat,'user':user})
     else:
         return redirect(shop_login)
     
@@ -392,7 +393,7 @@ def buyNow(req,pid):
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
         if data:
-            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+            return redirect("orderSummary",prod=prod.pk,data=data,discount=discount)
         else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -404,25 +405,44 @@ def buyNow(req,pid):
                 state=req.POST['state']
                 data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
                 data.save()
-                return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+                return redirect("orderSummary",prod=prod.pk,data=data,discount=discount)
             else:
                 return render(req,"user/addAddress.html")
     else:
         return redirect(shop_login) 
-    
-def payment(req,pid):
+
+def orderSummary(req,prod,data,discount):
     if 'user' in req.session:
+        prod=Details.objects.get(pk=prod)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method == 'POST':
+            address=req.POST['address']
+            addr=Address.objects.get(user=user,pk=address)
+        else:
+            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+        print(prod.pk)
+        addr=addr.pk
+        
+        return redirect("payment",pid=prod.pk,address=addr)    
+    else:
+        return redirect(shop_login)
+
+def payment(req,pid,address):
+    if 'user' in req.session:
+        # user=User.objects.get(username=req.session['user'])
         data=Details.objects.get(pk=pid)
         price=data.ofr_price
-        return render(req,'user/payment.html',{'price':price,'data':data})
+        addr=Address.objects.get(pk=address)
+        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr})
     else:
         return redirect(shop_login) 
     
-def book(req,pid):
+def book(req,pid,address):
     if 'user' in req.session:
         prod=Details.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
-        data=Bookings.objects.create(user=user,pro=prod,qty=1,price=prod.ofr_price)
+        data=Bookings.objects.create(user=user,pro=prod,qty=1,price=prod.ofr_price,address=Address.objects.get(pk=address))
         data.save()
         prod.stock-=1
         prod.save()
@@ -465,7 +485,8 @@ def buyAll(req):
         total=price-discount
         data=Address.objects.filter(user=user)
         if data:
-            return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+            # return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+            return redirect("orderSummary2",cart=cart,data=data,discount=discount,price=price,total=total)
         else:
             if req.method=='POST':
                 user=User.objects.get(username=req.session['user'])
@@ -477,12 +498,28 @@ def buyAll(req):
                 state=req.POST['state']
                 data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
                 data.save()
-                return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+                return redirect("orderSummary2",cart=cart,data=data,discount=discount,price=price,total=total)
             else:
                 return render(req,"user/addAddress.html")
     else:
         return redirect(shop_login) 
     
+def orderSummary2(req,cart,data,discount,price,total):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method == 'POST':
+            address=req.POST['address']
+            addr=Address.objects.get(user=user,pk=address)
+        else:
+            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+        print(prod.pk)
+        addr=addr.pk
+        
+        return redirect("payment",pid=prod.pk,address=addr)    
+    else:
+        return redirect(shop_login)
+
 def payment2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -503,5 +540,33 @@ def deleteBookings(req,pid):
         data=Bookings.objects.get(pk=pid)
         data.delete()
         return redirect(bookings)
+    else:
+        return redirect(shop_login)
+    
+def address(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method=='POST':
+            user=User.objects.get(username=req.session['user'])
+            name=req.POST['name']
+            phn=req.POST['phn']
+            house=req.POST['house']
+            street=req.POST['street']
+            pin=req.POST['pin']
+            state=req.POST['state']
+            data=Address.objects.create(user=user,name=name,phn=phn,house=house,street=street,pin=pin,state=state)
+            data.save()
+            return redirect(address)
+        else:
+            return render(req,"user/addAddress.html",{'data':data})
+    else:
+        return redirect(shop_login) 
+    
+def delete_address(req,pid):
+    if 'user' in req.session:
+        data=Address.objects.get(pk=pid)
+        data.delete()
+        return redirect(address)
     else:
         return redirect(shop_login)

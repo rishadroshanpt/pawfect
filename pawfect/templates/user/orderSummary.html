@@ -59,17 +59,22 @@
                 <img src="{{prod.product.img.url}}" alt="" width="300px" height="300px">
             </div>
             <div class="col-lg-8">
-              <label for="">Shipping address : </label><br>
-              <select name="address" id="address">
-                {% for i in data %}
-                  <option value="{{i}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
-                {% endfor %}
-              </select>
-              <h3>{{prod.product.name}}</h3>
-              <h3 class="price">{{prod.price}}</h3>
-              <h3 class="offerPrice">{{prod.ofr_price}}</h3>
-              <h3 class="discount">-{{discount}}</h3>
-              <a href="../payment/{{prod.pk}}">CONFIRM</a>
+              <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="">Shipping address : </label><br>
+                <select name="address" id="address">
+                  {% for i in data %}
+                    <option value="{{i.pk}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
+                  {% endfor %}
+                </select>
+                <a href="../../../address">Add new address + </a>
+                <h3>{{prod.product.name}}</h3>
+                <h3 class="price">{{prod.price}}</h3>
+                <h3 class="offerPrice">{{prod.ofr_price}}</h3>
+                <h3 class="discount">-{{discount}}</h3>
+                <button type="submit" class="btn btn-primary">CONFIRM</button>
+                <!-- <a href="../payment/{{prod.pk}}">CONFIRM</a> -->
+              </form>             
             </div>
         </div>
     </div>

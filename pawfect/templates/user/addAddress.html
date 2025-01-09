@@ -52,38 +52,59 @@
       </div>
     </div>
   </nav>
-<h1>Add address </h1>
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        <div class="mb-2">
-          <label for="name" class="form-label">Your full name:</label>
-          <input type="text" class="form-control" placeholder="Enter your name" name="name">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h1>Add address </h1>
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-2">
+            <label for="name" class="form-label">Your full name:</label>
+            <input type="text" class="form-control" placeholder="Enter your name" name="name">
+          </div>
+          <div class="mb-2">
+            <label for="phn" class="form-label">Phone number:</label>
+            <input type="number" class="form-control" placeholder="Enter phone number" name="phn">
+          </div>
+          <div class="mb-2">
+            <label for="house" class="form-label">House/building:</label>
+            <input type="text" class="form-control" name="house" id="" placeholder="Enter your house/building name/no.">
+          </div>
+          <div class="mb-2">
+            <label for="street" class="form-label">Street name:</label>
+            <input type="text" class="form-control" placeholder="Enter street details" name="street">
+          </div>
+          <div class="mb-2">
+              <label for="pin" class="form-label">PIN :</label>
+              <input type="number" class="form-control" placeholder="Enter PIN" name="pin">
+          </div>
+          <div class="mb-2">
+              <label for="state" class="form-label">State :</label>
+              <input type="text" class="form-control" placeholder="Enter state" name="state">
+          </div>
+          <div class="form-check mb-2">
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-5">
+        {% for i in data %}
+        <div class="card">
+          <div class="card-body">
+              <h4 class="card-title"> NAME : {{i.name}}</h4>
+              <h5 class="card-text"> HOUSE/BIULDING : {{i.house}}</h5>
+              <h5 class="card-text">STREET : {{i.street}}</h5>
+              <h5 class="card-text">PIN : {{i.pin}}</h5>
+              <h5 class="card-text">STATE : {{i.state}}</h5>
+              <h5 class="card-text">PHONE : {{i.phn}}</h5>
+              <a href="delete_address/{{i.pk}}" class="btn btn-danger">Delete</a>
+          </div>
         </div>
-        <div class="mb-2">
-          <label for="phn" class="form-label">Phone number:</label>
-          <input type="number" class="form-control" placeholder="Enter phone number" name="phn">
-        </div>
-        <div class="mb-2">
-          <label for="house" class="form-label">House/building:</label>
-          <input type="text" name="house" id="" placeholder="Enter your house/building name/no.">
-        </div>
-        <div class="mb-2">
-          <label for="street" class="form-label">Street name:</label>
-          <input type="text" class="form-control" placeholder="Enter street details" name="street">
-        </div>
-        <div class="mb-2">
-            <label for="pin" class="form-label">PIN :</label>
-            <input type="number" class="form-control" placeholder="Enter PIN" name="pin">
-        </div>
-        <div class="mb-2">
-            <label for="state" class="form-label">PIN :</label>
-            <input type="text" class="form-control" placeholder="Enter state" name="state">
-        </div>
-        <div class="form-check mb-2">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-  </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 </body>
 </html>

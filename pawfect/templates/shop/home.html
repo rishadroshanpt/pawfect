@@ -45,9 +45,6 @@
             <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="height: 400px; width: 100%;object-fit: contain;">
             <div class="card-body">
                 <h4 class="card-title">{{i.name}}</h4>
-                <!-- <p class="card-text">{{i.product.dis}}</p> 
-                <p class="card-text">{{i.product.pet.pet}}</p>
-                <p class="card-text">{{i.product.category.category}}</p> -->
                 {% for j in data1 %}
                     {% if j.product == i %}
                         <h4 class="card-title">{{j.dis}}</h4>

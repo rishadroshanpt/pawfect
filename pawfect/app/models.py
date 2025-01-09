@@ -48,4 +48,5 @@ class Bookings(models.Model):
     pro=models.ForeignKey(Details,on_delete=models.CASCADE)
     qty=models.TextField()
     price=models.FloatField()
+    address=models.ForeignKey(Address,on_delete=models.CASCADE)
     date=models.DateField(auto_now_add=True)

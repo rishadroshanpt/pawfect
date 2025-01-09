@@ -40,3 +40,8 @@ body{
     font-weight: 700;
     color: rgb(38, 255, 0);
 }
+.userDrop-menu{
+    border-radius: 0;
+    width: 800px;
+    /* height: 100%; */
+}
