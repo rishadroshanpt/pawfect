@@ -31,6 +31,7 @@ urlpatterns=[
     path('addCart/<pid>',views.addCart),
     path('addFav/<pid>',views.addFav),
     path('viewFav',views.viewFav),
+    path('deleteFav/<pid>',views.deleteFav),
     path('viewCart',views.viewCart),
     path('deleteCart/<pid>',views.deleteCart),
     path('cartIncrement/<pid>',views.cartIncrement),

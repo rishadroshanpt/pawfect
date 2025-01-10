@@ -22,11 +22,11 @@ body{
 }
 .nav-link:hover{
     color: black;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid orange;
 }
 .active{
     color: black;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid orange;
 }
 .price{
     font-weight: 700;
@@ -42,6 +42,16 @@ body{
 }
 .userDrop-menu{
     border-radius: 0;
-    width: 800px;
+    width: 400px;
     /* height: 100%; */
+
+}
+
+
+
+@media only screen and (max-width: 578px) {
+
+    .navbar-collapse{
+        background-color: white;
+    }
 }

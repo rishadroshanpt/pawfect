@@ -1,9 +1,21 @@
+.colomn{
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
 .petPhoto{
     border-radius: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+.petName{
+    font-weight: 500;
 }
 .petLink{
     text-decoration: none;
@@ -60,4 +72,49 @@
     background-color: rgba(240, 248, 255, 0.486);
     border-radius: 5px;
     border: 1px solid ;
+}
+@media only screen and (max-width: 578px) {
+    .navbar-toggler{
+        border: 0;
+    }
+    .navbar-toggler:focus{
+        box-shadow: 0 0 0 !important;
+        color: orange;
+    }
+    .navbar-toggler-icon:focus{
+        color: orange;
+    }
+    .petPhoto{
+        width: 60px;
+        height: 60px;
+    }
+    .petName{
+        font-size: 12px;
+    }
+    .petDrop-menu {
+        height: 40px;
+    }
+    .petDrop-menu a{
+        font-size: 10px;
+    }
+    .catDrop{
+        position: static !important;
+        float: right;
+        z-index: 10;
+    }
+    
+    .catDrop-menu {
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important;
+        margin-top: 0px !important;
+        width: 100% !important;
+        background-color: rgba(255, 255, 255, 0.503);
+        backdrop-filter: blur(10px);
+    }
+    .catDrop:hover .catDrop-menu{
+        display: block;
+    }
+    .catDrop-menu .dropdown-item:hover{
+        background-color: rgba(255, 255, 255, 0.667);
+        font-weight: 700;
+    }
 }

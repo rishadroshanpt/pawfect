@@ -23,11 +23,11 @@
             <a class="nav-link active" href="user_home">Home</a>
           </li>
           <li class="nav-item dropdown petDrop">
-            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">FILTER</a>
+            <a class="nav-link " href="" role="button" data-bs-toggle="dropdown">FILTER</a>
             <ul class="dropdown-menu petDrop-menu">
               {% for i in pet %}
               <li class="nav-item dropdown catDrop">
-                <a class="nav-link " href="" role="button" data-bs-toggle="dropdown">{{i.pet}}</a>
+                <a class="nav-link " href="petType/{{i.pk}}" role="button" data-bs-toggle="dropdown">{{i.pet}}</a>
                 <ul class="dropdown-menu catDrop-menu">
                   {% for j in cat %}
                   {% if j.pet == i %}
@@ -42,20 +42,12 @@
           <li class="nav-item">
             <a class="nav-link" href="viewCart">CART</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="bookings">Bookings</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="logout">Log out</a>
-          </li> -->
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="logout">Hi , {{user.first_name}}</a>
-          </li> -->
           <li class="nav-item dropdown userDrop">
             <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">hi , {{user.first_name}}</a>
             <ul class="dropdown-menu userDrop-menu">
 
                   <li><a class="dropdown-item" href="bookings">bookings</a></li>
+                  <li><a class="dropdown-item" href="viewFav">favorite</a></li>
                   <li><a class="dropdown-item" href="address">address</a></li>
                   <li><a class="dropdown-item" href="logout">logout</a></li>
             </ul>
@@ -67,10 +59,10 @@
     <div class="container">
         <div class="row">
             {% for i in pet %}
-                <div class="col-lg-3">
+                <div class="colomn">
                     <a class="petLink" href="petType/{{i.pk}}">
-                        <img class="petPhoto" src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
-                        <h2>{{i.pet}}</h2>
+                        <img class="petPhoto img-fluid" src="{{i.img.url}}" alt="" >
+                        <h2 class="petName">{{i.pet}}</h2>
                     </a>     
                 </div>
             {% endfor %}

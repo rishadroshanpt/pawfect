@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-sm  fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
+          <a class="navbar-brand" href="../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -43,12 +43,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="../viewCart">CART</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../bookings">BOOKINGS</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="../logout">Log out</a>
-              </li>    
+              <li class="nav-item dropdown userDrop">
+                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">hi , {{user.first_name}}</a>
+                <ul class="dropdown-menu userDrop-menu">
+    
+                      <li><a class="dropdown-item" href="../bookings">bookings</a></li>
+                      <li><a class="dropdown-item" href="../viewFav">favorite</a></li>
+                      <li><a class="dropdown-item" href="../address">address</a></li>
+                      <li><a class="dropdown-item" href="../logout">logout</a></li>
+                </ul>
+              </li>   
             </ul>
           </div>
         </div>

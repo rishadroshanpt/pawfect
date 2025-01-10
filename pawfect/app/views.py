@@ -359,8 +359,14 @@ def addFav(req,pid):
     if 'user' in req.session:
         prod=Product.objects.get(pk=pid)
         user=User.objects.get(username=req.session['user'])
-        data=Fav.objects.create(user=user,pro=prod)
-        data.save()
+        try:
+            data=Fav.objects.get(user=user,pro=prod)
+            if data:
+                print('hi')
+                return redirect(viewFav)
+        except:
+            data=Fav.objects.create(user=user,pro=prod)
+            data.save()
         return redirect(viewFav)
     else:
         return redirect(shop_login)  
@@ -374,6 +380,15 @@ def viewFav(req):
         return render(req,'user/viewFav.html',{'data':data,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login) 
+
+def deleteFav(req,pid):
+    if 'user' in req.session:
+        data=Fav.objects.get(pk=pid)
+        data.delete()
+        return redirect(viewFav)
+    else:
+        return redirect(shop_login) 
+
 
 def viewCart(req):
     if 'user' in req.session:
