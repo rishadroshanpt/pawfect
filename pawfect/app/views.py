@@ -355,6 +355,26 @@ def addCart(req,pid):
     else:
         return redirect(shop_login)  
     
+def addFav(req,pid):
+    if 'user' in req.session:
+        prod=Product.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        data=Fav.objects.create(user=user,pro=prod)
+        data.save()
+        return redirect(viewFav)
+    else:
+        return redirect(shop_login)  
+
+def viewFav(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Fav.objects.filter(user=user)
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
+        return render(req,'user/viewFav.html',{'data':data,'pet':pet,'cat':cat})
+    else:
+        return redirect(shop_login) 
+
 def viewCart(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -436,14 +456,15 @@ def orderSummary(req,prod,data,discount):
         prod=Details.objects.get(pk=prod)
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
         if req.method == 'POST':
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount})
+            return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount,'pet':pet,'cat':cat})
         print(prod.pk)
         addr=addr.pk
-        
         return redirect("payment",pid=prod.pk,address=addr)    
     else:
         return redirect(shop_login)
@@ -451,10 +472,12 @@ def orderSummary(req,prod,data,discount):
 def payment(req,pid,address):
     if 'user' in req.session:
         # user=User.objects.get(username=req.session['user'])
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
         data=Details.objects.get(pk=pid)
         price=data.ofr_price
         addr=Address.objects.get(pk=address)
-        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr})
+        return render(req,'user/payment.html',{'price':price,'data':data,'address':addr,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login) 
     
@@ -529,11 +552,13 @@ def orderSummary2(req,discount,price,total):
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
         cart=Cart.objects.filter(user=user)
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
         if req.method == 'POST':
             address=req.POST['address']
             addr=Address.objects.get(user=user,pk=address)
         else:
-            return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total,'discount':discount})
+            return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total,'discount':discount,'pet':pet,'cat':cat})
         addr=addr.pk
         return redirect("payment2",address=addr)    
     else:
@@ -543,6 +568,8 @@ def payment2(req,address):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         cart=Cart.objects.filter(user=user)
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
         discount=0
         for i in cart:
             discount+=(float(i.pro.price-i.pro.ofr_price)*i.qty)
@@ -551,7 +578,7 @@ def payment2(req,address):
             price+=(i.pro.price)*i.qty
         total=price-discount
         address=Address.objects.get(pk=address)
-        return render(req,'user/payment2.html',{'price':total,'address':address})
+        return render(req,'user/payment2.html',{'price':total,'address':address,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login) 
     

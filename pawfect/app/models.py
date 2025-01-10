@@ -34,6 +34,10 @@ class Cart(models.Model):
     qty=models.IntegerField()
     price=models.FloatField()
 
+class Fav(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    pro=models.ForeignKey(Product,on_delete=models.CASCADE)
+
 class Address(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.TextField()

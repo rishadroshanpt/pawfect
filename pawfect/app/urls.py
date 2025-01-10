@@ -29,6 +29,8 @@ urlpatterns=[
     path('product/<pid>',views.product),
     path('petType/<pid>',views.petType),
     path('addCart/<pid>',views.addCart),
+    path('addFav/<pid>',views.addFav),
+    path('viewFav',views.viewFav),
     path('viewCart',views.viewCart),
     path('deleteCart/<pid>',views.deleteCart),
     path('cartIncrement/<pid>',views.cartIncrement),
