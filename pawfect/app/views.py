@@ -296,20 +296,31 @@ def booking(req):
 def user_home(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
-        data=Product.objects.all()
+        data=Product.objects.all()[: : -1]
         data1=Details.objects.all()
+        data3=[]
+        for i in data1:
+            if i.ofr_per>30:
+                data3.append(i)
         pet=Pet.objects.all()
         cat=Category.objects.all()
-        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat,'user':user})
+        return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat,'user':user,'data3':data3})
     else:
         return redirect(shop_login)
     
 def petType(req,pid):
     if 'user' in req.session:
         data=Category.objects.filter(pet=pid)
+        data2=Product.objects.all()
+        data3=[]
+        for i in data2:
+            if i.category.pet == pid:
+                data3.append(i)
+        print(data3)
+        
         pet=Pet.objects.all()
         cat=Category.objects.all()
-        return render(req,'user/petType.html',{'data':data,'pet':pet,'cat':cat})
+        return render(req,'user/petType.html',{'data':data,'data3':data3,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login)
 
@@ -478,7 +489,7 @@ def orderSummary(req,prod,data,discount):
             addr=Address.objects.get(user=user,pk=address)
         else:
             return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount,'pet':pet,'cat':cat})
-        print(prod.pk)
+        # print(prod.pk)
         addr=addr.pk
         return redirect("payment",pid=prod.pk,address=addr)    
     else:

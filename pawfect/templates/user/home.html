@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
   <nav class="navbar navbar-expand-sm  fixed-top">
@@ -56,6 +57,9 @@
       </div>
     </div>
   </nav>
+  <div class="main">
+    <img src="{% static 'images/homeMain2.jpeg'%}" alt="" class="homeImg">
+  </div>
     <div class="container">
         <div class="row">
             {% for i in pet %}
@@ -67,7 +71,52 @@
                 </div>
             {% endfor %}
         </div>
-
     </div>
+    <div class="latest-main">
+      <h2>LATEST PRODUCTS</h2>
+      <div class="container swiper">
+          <div class="card-wrapper">
+              <ul class="card-list swiper-wrapper">
+                  {% for i in data %}
+                  <li class="card-item swiper-slide">
+                      <a href="product/{{i.pk}}" class="card-link">
+                          <img src="{{i.img.url}}" alt="" class="card-image">
+                          <h5 class="card-title">{{i.name}}</h5>
+                          <h5 class="card-title">{{i.dis}}</h5>
+                      </a>
+                  </li>
+                  {% endfor %}
+              </ul>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+          </div>
+        </div>
+    </div>
+    <div class="discount-main">
+      <h2>PRODUCTS WITH MORE THAN 30% DISCOUNT</h2>
+      <div class="container swiper">
+          <div class="card-wrapper">
+              <ul class="card-list swiper-wrapper">
+                  {% for i in data3 %}
+                  <li class="card-item swiper-slide">
+                      <a href="product/{{i.product.pk}}" class="card-link">
+                          <img src="{{i.product.img.url}}" alt="" class="card-image">
+                          <h5 class="card-title">{{i.product.name}}</h5>
+                          <h5 class="card-title">{{i.dis}}</h5>
+                          <h5><s><span>{{i.price}}</span></s>
+                            <span>{{i.ofr_price}}</span></h5>
+                      </a>
+                  </li>
+                  {% endfor %}
+              </ul>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+          </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

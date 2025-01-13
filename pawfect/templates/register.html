@@ -12,16 +12,12 @@
 <body>
     <form action="" method="post">
         {% csrf_token %}
-        <h2>REGISTER</h2>
-        <!-- <label for="">Username</label> -->
-        <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="">
+        <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="" class="loginImg">
         <input type="text" name="name" id="" placeholder="Name"><br>
         <input type="email" name="email" id="" placeholder="Email"><br>
-        <!-- <label for="">Password</label> -->
         <input type="password" name="password" id="" placeholder="Password"><br>
         <input type="submit" class="btn" value="SIGN IN">
         <a href="../">LOGIN</a>
-        <!-- <p>Don't have a account,<a href="register">Create a account.</a></p> -->
     </form>
     {% if messages %}
     {% for message in messages %}

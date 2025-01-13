@@ -13,8 +13,7 @@
 <body>
     <form action="" method="post">
         {% csrf_token %}
-        <h2>REGISTER</h2>
-        <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="">
+        <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="" class="">
         <input type="number" name="uotp" id="" placeholder="OTP"><br>
         <input type="submit" class="btn" value="VERIFY">
     </form>
