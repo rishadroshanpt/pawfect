@@ -13,14 +13,20 @@ new Swiper('.card-wrapper', {
     },
     breakpoints:{
         0:{
-            slidesPerView:1
+            slidesPerView:2,
+            spaceBetween: 40,
+
         },
         768:{
-            slidesPerView:3
+            slidesPerView:4,
+            spaceBetween: 40,
+
         },
         1024:{
-            slidesPerView:4
+            slidesPerView:5,
+            spaceBetween: 40,
+
         },
     }
   });
-  
+

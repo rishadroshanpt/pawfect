@@ -62,18 +62,18 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-            <!-- <a class="product" href="product/{{i.pk}}"> -->
-            <img class="petPhoto" src="{{data.img.url}}" alt="" style="width: 500px;height: 600px;object-fit: cover;">
+            <img class="petPhoto" src="{{data.img.url}}" alt="" >
         </div>
         <div class="col-lg-6">
             <h2>{{data.name}}</h2>
-            <h4 class="price">{{data2.price}}</h4>
-            <h4 class="offerPer">- {{data2.ofr_per}}%</h4>
-            <h4 class="offerPrice">{{data2.ofr_price}}</h4>
+            <h3>{{data.dis}}</h3>
+            <h4 class="offerPer">Special price</h4>
+            <h4><span class="offerPrice">{{data2.ofr_price}}</span><s><span class="price">{{data2.price}}</span></s><span class="offerPer">{{data2.ofr_per}}% off</span></h4>
+            
             {% if data2.stock > 0 %}
-            <h4 class=""> ONLY {{data2.stock}} LEFT</h4>
+            <h4 class=" stock"> ONLY {{data2.stock}} LEFT</h4>
             {% else %}
-            <h4>OUT OF STOCK </h4>
+            <h4 class="stock">OUT OF STOCK </h4>
             {% endif %}
             {% for j in data1 %}
             <label class="" for="">
@@ -82,11 +82,11 @@
             </label>
             {% endfor %} <br>
             {% if data2.stock > 0 %}
-            <a class="btn btn-primary" href="../addCart/{{data2.pk}}">Add to cart</a>
-            <a class="btn btn-danger" href="../buyNow/{{data2.pk}}">Buy Now</a>
+            <a class="btn cart" href="../addCart/{{data2.pk}}">Add to cart</a>
+            <a class="btn buy" href="../buyNow/{{data2.pk}}">Buy Now</a>
             {% else %}            
             {% endif %}
-            <a class="btn btn-primary" href="../addFav/{{data.pk}}"><i class="fa-regular fa-heart"></i></a>
+            <a class="btn fav" href="../addFav/{{data.pk}}"><i class="fa-regular fa-heart"></i></a>
             
 
 

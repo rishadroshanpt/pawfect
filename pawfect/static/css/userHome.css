@@ -101,8 +101,8 @@
     object-fit: cover;
     border-radius: 10px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
 }
 .swiper-slide a{
     text-decoration: none;
@@ -114,17 +114,25 @@
     margin: 20px 0;
     padding: 0 50px;
 }
+.petRow .column{
+    -ms-flex: 25%; 
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+.productRow .column{
+    -ms-flex: 25%; 
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
 
 @media only screen and (max-width: 578px) {
     .navbar-toggler{
         border: 0;
     }
-    .navbar-toggler:focus{
-        box-shadow: 0 0 0 !important;
-        color: orange;
-    }
-    .navbar-toggler-icon:focus{
-        color: orange;
+    .homeImg{
+        height: 200px;
     }
     .petPhoto{
         width: 60px;
@@ -136,30 +144,44 @@
     .petDrop{
         display: none;
     }
-    .petDrop-menu {
-        height: 40px;
+    .card-wrapper img{
+        width: 80px;
+        height: 80px;
     }
-    .petDrop-menu a{
-        font-size: 10px;
+    h2{
+        font-size: 18px;
     }
-    .catDrop{
-        position: static !important;
-        float: right;
-        z-index: 10;
+    h5{
+        font-size: 12px;
     }
-    
-    .catDrop-menu {
-        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important;
-        margin-top: 0px !important;
-        width: 100% !important;
-        background-color: rgba(255, 255, 255, 0.503);
-        backdrop-filter: blur(10px);
+    .card-wrapper [class^="swiper-button-"]::after{
+        font-size: 15px;
+        color: black;
     }
-    .catDrop:hover .catDrop-menu{
-        display: block;
+    .petRow .column{
+        -ms-flex: 50%; 
+        flex: 50%;
+        max-width: 50%;
+        padding: 0 4px;
     }
-    .catDrop-menu .dropdown-item:hover{
-        background-color: rgba(255, 255, 255, 0.667);
-        font-weight: 700;
+    .petRow img{
+        width: 100px;
+        height: 100px;
+    }
+    .petRow h2{
+        font-size: 12px;
+    }
+    .productRow img{
+        width: 100px;
+        height: 100px;
+    }
+    .productRow .column{
+        -ms-flex: 50%; 
+        flex: 50%;
+        max-width: 50%;
+        padding: 0 4px;
+    }
+    .productRow h6{
+        font-size: 12px;
     }
 }

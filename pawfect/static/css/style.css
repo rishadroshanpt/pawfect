@@ -29,29 +29,111 @@ body{
     border-bottom: 2px solid orange;
 }
 .price{
+    font-size: 16px;
     font-weight: 700;
-    color: rgba(128, 128, 128, 0.238);
+    color: rgba(128, 128, 128, 0.511);
+    padding: 10px;
 }
 .offerPrice{
     font-weight: 700;
     color: rgb(255, 132, 0);
 }
 .offerPer,.discount{
+    font-size: 16px;
     font-weight: 700;
-    color: rgb(38, 255, 0);
+    color: rgb(32, 148, 12);
 }
-.userDrop-menu{
-    border-radius: 0;
-    width: 400px;
-    /* height: 100%; */
-
+.stock{
+    font-size: 18px;
 }
-
-
+.cart{
+    border: 1px solid  rgb(255, 132, 0);
+    background-color:  rgb(255, 132, 0);
+    color:  rgb(255, 255, 255);
+}
+.cart:hover{
+    color:  rgb(255, 132, 0);
+    border: 1px solid  rgb(255, 132, 0);
+}
+.buy{
+    border: 1px solid  rgb(255, 132, 0);
+    color:  rgb(255, 132, 0);
+}
+.buy:hover{
+    background-color:  rgb(255, 132, 0);
+    color: white;
+}
+.cartView{
+    padding-top: 30px;
+}
+.cartView img{
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.cartView h2{
+    font-weight: 700;
+    color: rgb(77, 76, 75);
+}
+.cartView .btn{
+    border: 1px solid black;
+    padding: 5px;
+    height: 30px;
+}
+.cartView .btn:hover{
+    background-color: rgb(152, 150, 150);
+    color: white;
+}
+.buyAll{
+    background-color:  rgb(255, 132, 0);
+    color: white;
+}
+.buyAll:hover{
+    color:  rgb(255, 132, 0);
+    border: 1px solid  rgb(255, 132, 0);
+}
+#price{
+    color: rgb(3, 177, 3);
+    font-weight: 600;
+}
+#totalPrice{
+    color: rgb(156, 83, 5);
+    font-weight: 600;
+}
+.total{
+    font-weight: 700;
+    color: green;
+}
+.totalText{
+    color: rgba(3, 65, 3, 0.601);
+}
+.totalRow{
+    margin-top: 50px;
+}
 
 @media only screen and (max-width: 578px) {
 
     .navbar-collapse{
         background-color: white;
+    }
+    .cartView .col-xs-6{
+        -ms-flex: 50%; 
+        flex: 50%;
+        max-width: 50%;
+        padding: 0 4px;
+    }
+    .cartView h2{
+        font-size: 16px;
+    }
+    .cartView .btn{
+        padding: 3px;
+        height: 25px;
+    }
+    .cartView h4{
+        font-size: 12px;
+    }
+    .totalText,.total{
+        font-size: 13px;
     }
 }

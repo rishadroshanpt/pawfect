@@ -59,31 +59,15 @@
     </div>
   </nav>
     <div class="container">
-        <!-- <div class="row">
-            {% for i in pet %}
-                <div class="col-lg-3">
-                    <a href="petType/{{i.pk}}">
-                        <img src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
-                        <h2>{{i.pet}}</h2>
-                    </a>
-                   
-                </div>
-            {% endfor %}
-        </div> -->
-
-
-
-        <div class="row">
-          <div class="row">
+          <div class="row petRow">
             {% for i in data %}
-                <div class="col-lg-3">
+                <div class="column">
                     <a class="petLink" href="../products/{{i.pk}}">
-                        <img class="petPhoto" src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
+                        <img class="petPhoto" src="{{i.img.url}}" alt="" >
                         <h2>{{i.category}}</h2>
                     </a>     
                 </div>
             {% endfor %}
-        </div>
         </div>
     </div>
     <div class="main">

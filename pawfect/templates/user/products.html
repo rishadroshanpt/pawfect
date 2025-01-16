@@ -58,11 +58,11 @@
         </div>
       </nav>
     <div class="container">
-      <div class="row">
+      <div class="row productRow">
         {% for i in data %}
-            <div class="col-lg-3">
+            <div class="column">
                 <a class="product" href="../product/{{i.pk}}">
-                    <img class="petPhoto" src="{{i.img.url}}" alt="" style="width: 200px;height: 200px;object-fit: cover;">
+                    <img class="petPhoto" src="{{i.img.url}}" alt="">
                     <h6>{{i.name}}</h6>
                     <h6>{{i.dis}}</h6>
      

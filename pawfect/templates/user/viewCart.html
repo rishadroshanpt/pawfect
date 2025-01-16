@@ -57,30 +57,43 @@
           </div>
         </div>
       </nav>
-    <div class="container">
+    <div class="container cart-container">
       {% if data %}
         {% for i in data %}
-        <div class="row">
+        <div class="row cartView">
             <div class="col-lg-6">
                 <!-- <a class="product" href="product/{{i.pk}}"> -->
-                <img class="petPhoto" src="{{i.pro.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
+                <img src="{{i.pro.product.img.url}}" alt="" >
             </div>
             <div class="col-lg-6">
                 <h2>{{i.pro.product.name}}</h2>
                 <div class="cartQty">
-                  <a class="btn btn-primary" href="cartDecrement/{{i.pk}}">-</a><h4 id="qty">{{i.qty}}</h4><a class="btn btn-primary" href="cartIncrement/{{i.pk}}">+</a>
+                  <a class="btn" href="cartDecrement/{{i.pk}}">-</a><h4 id="qty">{{i.qty}}</h4><a class="btn" href="cartIncrement/{{i.pk}}">+</a>
                 </div>
-                <h4 id="price">{{i.pro.ofr_price}}</h4>
-                <h4 id="price">{{i.price}}</h4>
+                <div class="row">
+                  <div class="col-lg-6 col-xs-6">
+                    <h4>Price for 1 item</h4>
+                    <h4>Offer Price for 1 item</h4>
+                    <h4>You save</h4>
+                    <h4>Total price for {{i.qty}} items</h4>
+                  </div>
+                  <div class="col-lg-6 col-xs-6">
+                    <h4 id="price">{{i.pro.price}}</h4>
+                    <h4 id="price">{{i.pro.ofr_price}}</h4>
+                    <h4 id="price">{{i.pro.ofr_per}} %</h4>
+                    <h4 id="totalPrice">{{i.price}}</h4>
+                  </div>
+                </div>
+                
             </div>
         </div>
         {% endfor %}
-        <div class="row">
+        <div class="row totalRow">
           <div class="col-lg-6">
-            <h2>{{total}}</h2>
+            <h2><span class="totalText">Total amount payable for all products in the cart : </span><span class="total">{{total}}</span></h2>
           </div>
           <div class="col-lg-6">
-            <a class="btn btn-primary" href="buyAll">CHECKOUT CART</a>
+            <a class="btn buyAll" href="buyAll">CHECKOUT CART</a>
           </div>
         </div>
       {% endif %}
