@@ -101,15 +101,14 @@
     object-fit: cover;
     border-radius: 10px;
     display: block;
-    /* margin-left: auto;
-    margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 .swiper-slide a{
     text-decoration: none;
     color: black;
     text-align: center;
 }
-
 .discount-main{
     margin: 20px 0;
     padding: 0 50px;

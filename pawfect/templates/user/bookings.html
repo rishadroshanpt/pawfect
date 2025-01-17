@@ -57,21 +57,32 @@
           </div>
         </div>
       </nav>
-    <div class="container">
+    <div class="container bookings">
         {% for i in data %}
-        <div class="row">
-            <div class="col-lg-6">
-                <!-- <a class="product" href="product/{{i.pk}}"> -->
-                <img class="petPhoto" src="{{i.pro.product.img.url}}" alt="" style="width: 250px;height: 200px;object-fit: cover;">
+        <div class="row row1">
+            <div class="col-6">
+                <img src="{{i.pro.product.img.url}}" alt="">
             </div>
             <div class="col-lg-6">
-                <h2>{{i.pro.product.name}}</h2>
-                <h2>{{i.qty}}</h2>
-                <h2>{{i.price}}</h2>
-                <h2>{{i.address.name}}</h2>
-                <h2>{{i.address.house}}</h2>
-                <h2>{{i.date}}</h2>
-                <a class="btn btn-primary" href="deleteBookings/{{i.pk}}">delete</a>
+              <div class="row row2">
+                <div class="col-6">
+                  <h2 class="name">{{i.pro.product.name}}</h2>
+                  <h2>QTY : {{i.qty}}</h2>
+                  <h2>PRICE : {{i.price}}</h2>
+                  <h2>BOOKED ON : {{i.date}}</h2>
+                </div>
+                <div class="col-6">
+                  <h2 class="name">Shipping address</h2>
+                  <h2>{{i.address.name}}</h2>
+                  <h2>{{i.address.house}}</h2>
+                  <h2>{{i.address.street}}</h2>
+                  <h2>{{i.address.pin}}</h2>
+                  <h2>{{i.address.state}}</h2>
+                </div>
+              </div>
+                
+                
+                <!-- <a class="btn btn-primary" href="deleteBookings/{{i.pk}}">delete</a> -->
 
             </div>
         </div>

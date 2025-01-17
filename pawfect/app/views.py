@@ -314,10 +314,8 @@ def petType(req,pid):
         data2=Product.objects.all()
         data3=[]
         for i in data2:
-            if i.category.pet == pid:
+            if int(i.category.pet.pk) == int(pid) :
                 data3.append(i)
-        print(data3)
-        
         pet=Pet.objects.all()
         cat=Category.objects.all()
         return render(req,'user/petType.html',{'data':data,'data3':data3,'pet':pet,'cat':cat})

@@ -28,6 +28,9 @@ body{
     color: black;
     border-bottom: 2px solid orange;
 }
+.container{
+    padding-top: 20px;
+}
 .price{
     font-size: 16px;
     font-weight: 700;
@@ -180,14 +183,39 @@ body{
 .os .row2 .col-lg-6 h3{
     font-size: 20px;
 }
-.os .btn{
+.os .btn,.address .btn1{
     border-color: orange;
     color: orange;
 
 }
-.os .btn:hover{
+.os .btn,.address .btn1:hover{
     background-color: orange;
     color: white;
+}
+.bookings .row1{
+    height: 250px;
+    padding: 20px;
+}
+.bookings .row img{
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.bookings .row2 h2{
+    font-size: 21px;
+}
+.bookings .row2 .name{
+    font-weight: 700;
+}
+.petType, .petType .row2{
+    margin-top: 40px
+}
+.petType .row2 a{
+    margin: 20px;
+}
+.container .petRow{
+    padding-top: 30px;
 }
 @media only screen and (max-width: 578px) {
 
@@ -270,5 +298,25 @@ body{
     }
     .os .row2 .col-lg-6{
         max-width: 50%;
+    }
+    .bookings .row1{
+        border-bottom: 1px solid;
+    }
+    .bookings .row img{
+        width: 90px;
+        height: 70px;
+    }
+    .bookings .row2 h2{
+        font-size: 12px;
+    }
+    .petType .row2{
+        margin-top: 10px
+    }
+    .petType .row2 img{
+        width: 80px;
+        height: 70px;
+    }
+    .petType .row2 h2{
+        font-size: 12px;
     }
 }
