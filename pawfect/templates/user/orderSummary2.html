@@ -56,21 +56,30 @@
       </div>
     </div>
   </nav>
-    <h1>Order summary</h1>
-    <div class="container">
+    <div class="container os2">
         <div class="row">
             <div class="col-lg-8">
                 {% for i in cart %}
-                <div class="row">
+                <div class="row row2">
                     <div class="col-lg-6">
-                        <img src="{{i.pro.product.img.url}}" alt="" width="300px" height="300px">
+                        <img src="{{i.pro.product.img.url}}" alt="">
+                        <h3>QTY : {{i.qty}}</h3>
                     </div>
-                    <div class="col-lg-6">
-                        <h3>{{i.pro.product.name}}</h3>
-                        <h3>{{i.qty}}</h3>
-                        <h3 class="price">{{i.pro.price}}</h3>
-                        <h3 class="offerPrice">{{i.pro.ofr_price}}</h3>
-                        <h3 class="offerPrice">{{i.price}}</h3>
+                    <div class="col-lg-6 col-lg-61">
+                        <h3 class="name">{{i.pro.product.name}}</h3>
+                        <div class="row row3">
+                          <div class="col-lg-6 col-xs-6">
+                            <h3>Price </h3>
+                            <h3>Offer price </h3>
+                            <h3>Total price </h3>
+                          </div>
+                          <div class="col-lg-6 col-xs-6">
+                            <h3 class="price">{{i.pro.price}}</h3>
+                            <h3 class="offerPrice">{{i.pro.ofr_price}}</h3>
+                            <h3 class="totalPrice">{{i.price}}</h3>
+                          </div>
+                        </div>
+                        
                     </div>
                 </div>
                 {% endfor %}
@@ -83,13 +92,24 @@
                   {% for i in data %}
                     <option value="{{i.pk}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
                   {% endfor %}
-                </select>
+                </select><br>
               <a href="../../../address">Add new address + </a>
-
-                <h3 class="price">Total is {{price}} rupees</h3>
+                <div class="row row4">
+                  <div class="col-lg-6">
+                    <h3>Total price : </h3>
+                    <h3>You save : </h3>
+                    <h3>Total amount payable : </h3>
+                  </div>
+                  <div class="col-lg-6">
+                    <h3 class="price">{{price}}</h3>
+                    <h3 class="discount">{{discount}}</h3>
+                    <h3 class="offerPrice">{{total}}</h3>
+                  </div>
+                </div>
+                <!-- <h3 class="price">Total is {{price}} rupees</h3>
 
                 <h3 class="discount">You save a total of {{discount}} rupees</h3>
-                <h3 class="offerPrice">The total amount payable is {{total}} rupees</h3>
+                <h3 class="offerPrice">The total amount payable is {{total}} rupees</h3> -->
 
                 <button type="submit" class="btn btn-primary">CONFIRM</button>
               </form>   

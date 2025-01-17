@@ -61,11 +61,11 @@
       {% if data %}
         {% for i in data %}
         <div class="row cartView">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col1">
                 <!-- <a class="product" href="product/{{i.pk}}"> -->
                 <img src="{{i.pro.product.img.url}}" alt="" >
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 col2">
                 <h2>{{i.pro.product.name}}</h2>
                 <div class="cartQty">
                   <a class="btn" href="cartDecrement/{{i.pk}}">-</a><h4 id="qty">{{i.qty}}</h4><a class="btn" href="cartIncrement/{{i.pk}}">+</a>
@@ -79,9 +79,9 @@
                   </div>
                   <div class="col-lg-6 col-xs-6">
                     <h4 id="price">{{i.pro.price}}</h4>
-                    <h4 id="price">{{i.pro.ofr_price}}</h4>
+                    <h4 class="offerPrice">{{i.pro.ofr_price}}</h4>
                     <h4 id="price">{{i.pro.ofr_per}} %</h4>
-                    <h4 id="totalPrice">{{i.price}}</h4>
+                    <h4 class="totalPrice">{{i.price}}</h4>
                   </div>
                 </div>
                 
@@ -96,6 +96,8 @@
             <a class="btn buyAll" href="buyAll">CHECKOUT CART</a>
           </div>
         </div>
+        {% else %}
+        <h2>Start shoping</h2>
       {% endif %}
 </body>
 </html>

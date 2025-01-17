@@ -32,11 +32,12 @@ body{
     font-size: 16px;
     font-weight: 700;
     color: rgba(128, 128, 128, 0.511);
-    padding: 10px;
+    padding-right: 10px;
 }
 .offerPrice{
     font-weight: 700;
     color: rgb(255, 132, 0);
+    padding-right: 10px;
 }
 .offerPer,.discount{
     font-size: 16px;
@@ -97,7 +98,7 @@ body{
     color: rgb(3, 177, 3);
     font-weight: 600;
 }
-#totalPrice{
+.totalPrice{
     color: rgb(156, 83, 5);
     font-weight: 600;
 }
@@ -111,11 +112,102 @@ body{
 .totalRow{
     margin-top: 50px;
 }
+.os2{
+    padding-top: 20px;
+}
+.os2 .col-lg-8 .row2{
+    padding: 20px;
+    height: 200px;
+    border: 1px solid;
+    border-radius: 10px;
+}
+.os2 .col-lg-8 .row img{
+    border-radius: 5px;
+    width: 200px;
+    height: 150px;
+}
+.os2 .col-lg-8 h3{
+    font-size: 20px;
+}
+.os2 .col-lg-8 .row3{
+    margin: 0;
+    padding: 0;
+}
+.os2 .col-lg-8 .row3 .col-xs-6{
+    padding: 0;
+}
+.os2 .name{
+    font-weight: 700;
+    color: rgb(77, 76, 75);
+}
+.os2 a{
+    text-decoration: none;
+    color: black;
+}
+.os2 .col-lg-4 #address{
+    width: 350px;
+    height: 50px;
+}
+.os2 .row4{
+    margin-top: 20px;
+}
+.os2 .row4 .col-lg-6 h3{
+    font-size: 18px;
+}
+.pay .btn{
+    background-color: orange;
+    color: white;
+}
+.os{
+    padding-top: 20px;
+}
+.os img{
+    width: 300px;
+    height: 280px;
+    border-radius: 5px;
+}
+.os a{
+    text-decoration: none;
+    color: black;
+}
+.os .name{
+    font-weight: 700;
+    color: rgb(77, 76, 75);
+}
+.os .row2{
+    margin-top: 20px;
+}
+.os .row2 .col-lg-6 h3{
+    font-size: 20px;
+}
+.os .btn{
+    border-color: orange;
+    color: orange;
 
+}
+.os .btn:hover{
+    background-color: orange;
+    color: white;
+}
 @media only screen and (max-width: 578px) {
 
     .navbar-collapse{
         background-color: white;
+    }
+    .cartView{
+        /* border: 1px solid black; */
+        box-shadow: 0 0 5px ;
+
+    }
+    .cartView img{
+        width: 80px;
+        height: 70px;
+    }
+    .cartView .col1{
+        max-width: 30%;
+    }
+    .cartView .col2{
+        max-width: 70%;
     }
     .cartView .col-xs-6{
         -ms-flex: 50%; 
@@ -135,5 +227,48 @@ body{
     }
     .totalText,.total{
         font-size: 13px;
+    }
+    .os2 .col-lg-8 .row2{
+        border: 0;
+        border-radius: 0;
+        margin: 0;
+        padding: 3px;
+        height: 100px;
+        border-bottom: 1px solid;
+    }
+    .os2 .col-lg-8{
+        padding: 0;
+    }
+    .os2 .col-lg-8 .col-lg-6{
+        max-width: 40%;
+    }
+    .os2 .col-lg-8 .col-lg-61{
+        max-width: 60%;
+    }
+    .os2 .col-lg-8 .row img{
+        width: 80px;
+        height: 70px;
+    }
+    .os2 .col-lg-8 h3{
+        font-size: 12px;
+    }
+    .os2 .col-lg-8 .row3{
+        margin: 0;
+        padding: 0;
+    }
+    .os2 .col-lg-8 .row3 .col-xs-6{
+        padding: 0;
+    }
+    .os2 .row4 .col-lg-6 {
+        max-width: 50%;
+    }
+    .os2 .row4 .col-lg-6 h3{
+        font-size: 12px;
+    }
+    .os .row2 .col-lg-6 h3{
+        font-size: 12px;
+    }
+    .os .row2 .col-lg-6{
+        max-width: 50%;
     }
 }
