@@ -1,5 +1,7 @@
 body{
     margin-top: 60px;
+    font-family: 'Cute Font';
+    font-size: 28px;
 }
 .navbar{
     background-color: rgb(255, 255, 255);
@@ -9,7 +11,7 @@ body{
 .nav-link{
     /* font-weight: 600; */
     color: rgb(0, 0, 0);
-    /* padding: 5px 10px !important; */
+    padding: 5px 10px !important;
     /* margin: 0 10px; */
     /* color: #fff; */
     text-transform: uppercase;
@@ -17,7 +19,7 @@ body{
     letter-spacing: 0.15em;
     
     display: inline-block;
-    padding: 15px 20px;
+    /* padding: 15px 20px; */
     position: relative;
 }
 .nav-link:hover{
@@ -25,6 +27,16 @@ body{
     border-bottom: 2px solid orange;
 }
 .active{
+    color: black;
+    border-bottom: 2px solid orange;
+}
+.userDrop-menu{
+    text-transform: uppercase;
+    font-size: 20px;
+    height: 900px;
+    width: 500px;
+}
+.userDrop-menu .dropdown-item:hover{
     color: black;
     border-bottom: 2px solid orange;
 }
@@ -183,12 +195,12 @@ body{
 .os .row2 .col-lg-6 h3{
     font-size: 20px;
 }
-.os .btn,.address .btn1{
+.os .btn,.address .btn1,.addressForm .btn{
     border-color: orange;
     color: orange;
 
 }
-.os .btn,.address .btn1:hover{
+.os .btn,.address .btn1 , .addressForm .btn:hover{
     background-color: orange;
     color: white;
 }
@@ -216,6 +228,25 @@ body{
 }
 .container .petRow{
     padding-top: 30px;
+}
+.addressForm{
+    font-size: 1.7rem;
+}
+.fav img{
+    width: 250px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.fav a{
+    text-decoration: none;
+    color: black;
+}
+.fav .row{
+    margin: 20px 0;
+}
+.fav .col-2 .btn{
+    margin-top: 80%;
 }
 @media only screen and (max-width: 578px) {
 
@@ -318,5 +349,20 @@ body{
     }
     .petType .row2 h2{
         font-size: 12px;
+    }
+    .addressForm{
+        font-size: 1rem;
+    }
+    .address .form-label{
+        font-size: 18px;
+    }
+    .fav img{
+        width: 100px;
+        height: 90px;
+    }
+    .fav .col-2 .btn{
+        width: 50px;
+        font-size: 12px;
+        margin-top: 80%;
     }
 }
