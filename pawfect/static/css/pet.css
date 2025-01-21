@@ -5,11 +5,43 @@
 .card{
     margin: 10px 0;
     border-radius: 15px;
+    width: 400px;
+    height: 120px;
 }
 .card img{
     border-radius: 15px 0 0 15px;
+    width: 200px;
+    height: 120px;
+    object-fit: cover;
 }
 .dbtn{
     font-size: 10px;
     padding: 3px;
+}
+
+@media only screen and (max-width: 578px) {
+    .col{
+        max-width: 50%;
+    }
+    #pet_form,#category_form{
+        width: 300px;
+        margin-top: 100px;
+    }
+    .card{
+        border-radius: 5px;
+        width: 150px;
+        height: 130px;
+        font-size: 12px;
+    }
+    .card h4{
+        font-size: 12px;
+    }
+    .card img{
+        border-radius: 5px 0 0 5px;
+        width: 90px;
+        height: 130px;
+    }
+    form{
+        font-size: 14px;
+    }
 }

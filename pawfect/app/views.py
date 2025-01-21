@@ -81,9 +81,34 @@ def shp_logout(req):
 
 def shop_home(req):
     if 'eshop' in req.session:
-        data=Product.objects.all()
-        data1=Details.objects.all()
-        return render(req,'shop/home.html',{'data':data,'data1':data1})
+        data=Pet.objects.all()
+        return render(req,'shop/home.html',{'data':data})
+    else:
+        return redirect(shop_login)
+    
+def shop_petType(req,pid):
+    if 'eshop' in req.session:
+        data=Category.objects.filter(pet=pid)
+        return render(req,'shop/petType.html',{'data':data})
+    else:
+        return redirect(shop_login)
+    
+def shopProds(req,pid):
+    if 'eshop' in req.session:
+        data=Product.objects.filter(category=pid)
+        return render(req,'shop/shopProds.html',{'data':data})
+    else:
+        return redirect(shop_login)
+    
+def shopProd(req,pid):
+    if 'eshop' in req.session:
+        data=Product.objects.get(pk=pid)
+        data1=Details.objects.filter(product=pid)
+        data2=Details.objects.get(product=pid,pk=data1[0].pk)
+        if req.GET.get('dis'):
+            dis=req.GET.get('dis')
+            data2=Details.objects.get(product=pid,pk=dis)
+        return render(req,'shop/shopProd.html',{'data':data,'data1':data1,'data2':data2})
     else:
         return redirect(shop_login)
     
@@ -139,6 +164,7 @@ def edit_pet(req,pid):
             return render(req,'shop/editPet.html',{'data':data})
     else:
         return redirect(shop_login)
+    
 def delete_category(req,pid):
     data=Category.objects.get(pk=pid)
     url=data.img.url
@@ -268,7 +294,8 @@ def edit_detail(req,pid):
             return redirect("edit_details",pid=data)
         else:
             data=Details.objects.get(pk=pid)
-            return render(req,'shop/editDetails.html',{'data':data})
+            ofr=int(data.ofr_per)
+            return render(req,'shop/editDetails.html',{'data':data,'ofr':ofr})
     else:
         return redirect(shop_login)
 
@@ -371,7 +398,6 @@ def addFav(req,pid):
         try:
             data=Fav.objects.get(user=user,pro=prod)
             if data:
-                print('hi')
                 return redirect(viewFav)
         except:
             data=Fav.objects.create(user=user,pro=prod)
@@ -487,7 +513,6 @@ def orderSummary(req,prod,data,discount):
             addr=Address.objects.get(user=user,pk=address)
         else:
             return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount,'pet':pet,'cat':cat})
-        # print(prod.pk)
         addr=addr.pk
         return redirect("payment",pid=prod.pk,address=addr)    
     else:

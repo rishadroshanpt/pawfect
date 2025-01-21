@@ -248,6 +248,17 @@ body{
 .fav .col-2 .btn{
     margin-top: 80%;
 }
+.booking img{
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+}
+.booking .row{
+    height: 300px;
+    border-bottom: 1px solid;
+    margin: 50px 0;
+}
+
 @media only screen and (max-width: 578px) {
 
     .navbar-collapse{
@@ -364,5 +375,24 @@ body{
         width: 50px;
         font-size: 12px;
         margin-top: 80%;
+    }
+
+    /* -----------------------------------------admin---------------------------------------- */
+
+    .editpet{
+        font-size: 14px;
+    }
+    .det{
+        font-size: 18px;
+    }
+    .booking img{
+        width: 100px;
+        height: 90px;
+    }
+    .booking .row{
+        height: 200px;
+    }
+    .booking h2{
+        font-size: 14px;
     }
 }
