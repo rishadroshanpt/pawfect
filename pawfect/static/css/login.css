@@ -39,4 +39,8 @@ input{
     .loginImg{
         width: 70px;
     }
+    .alert{
+        width: 300px;
+        margin: auto;
+    }
 }
