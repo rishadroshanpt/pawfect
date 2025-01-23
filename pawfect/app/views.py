@@ -516,14 +516,14 @@ def orderSummary(req,prod,data,discount):
             address=req.POST['address']
             pay=req.POST['pay']
             addr=Address.objects.get(user=user,pk=address)
-            print(pay)
         else:
             return render(req,'user/orderSummary.html',{'prod':prod,'data':data,'discount':discount,'pet':pet,'cat':cat})
-        addr=addr.pk
+        req.session['address']=addr.pk
+        req.session['det']=prod.pk
         if pay == 'paynow':
-            return redirect("payment",pid=prod.pk,address=addr)    
+            return redirect("payment")    
         else:
-            return redirect("book",pid=prod.pk,address=addr)
+            return redirect("book")
     else:
         return redirect(shop_login)
 
@@ -539,15 +539,15 @@ def orderSummary(req,prod,data,discount):
 #     else:
 #         return redirect(shop_login) 
     
-def order_payment(req,pid,address):
+def order_payment(req):
     if 'user' in req.session:
-        # data=Details.objects.get(pk=pid)
-        # price=data.ofr_price
-        addr=Address.objects.get(pk=address)
         user = User.objects.get(username=req.session['user'])
+        data = Details.objects.get(pk=req.session['det'])
         name = user.first_name
-        data=Details.objects.get(pk=pid)
+        # data=Details.objects.get(pk=pid)
         amount = data.ofr_price
+        # if data:
+        #     req.session['det']=data
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
@@ -564,8 +564,6 @@ def order_payment(req,pid,address):
                 "callback_url": "http://127.0.0.1:8000/callback",
                 "razorpay_key": settings.RAZORPAY_KEY_ID,
                 "order": order,
-                "data":data,
-                "address":addr
             },
         )
     else:
@@ -581,9 +579,7 @@ def callback(request):
         payment_id = request.POST.get("razorpay_payment_id", "")
         provider_order_id = request.POST.get("razorpay_order_id", "")
         signature_id = request.POST.get("razorpay_signature", "")
-        data = request.POST.get('data')
-        address = request.POST.get('address')
-        print(data)
+
         order = Order.objects.get(provider_order_id=provider_order_id)
         order.payment_id = payment_id
         order.signature_id = signature_id
@@ -595,7 +591,7 @@ def callback(request):
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return redirect("book",pid=data,address=address)  
+            return redirect("book")  
  
 
     else:
@@ -610,11 +606,12 @@ def callback(request):
         order.save()
         return render(request, "callback.html", context={"status": order.status})  
 
-def book(req,pid,address):
+def book(req):
     if 'user' in req.session:
-        prod=Details.objects.get(pk=pid)
+        address=Address.objects.get(pk=req.session['address'])
+        prod=Details.objects.get(pk=req.session['det'])
         user=User.objects.get(username=req.session['user'])
-        data=Bookings.objects.create(user=user,pro=prod,qty=1,price=prod.ofr_price,address=Address.objects.get(pk=address))
+        data=Bookings.objects.create(user=user,pro=prod,qty=1,price=prod.ofr_price,address=Address.objects.get(pk=address.pk))
         data.save()
         prod.stock-=1
         prod.save()
@@ -678,15 +675,15 @@ def orderSummary2(req,discount,price,total):
             addr=Address.objects.get(user=user,pk=address)
         else:
             return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total,'discount':discount,'pet':pet,'cat':cat})
-        addr=addr.pk
+        req.session['address']=addr.pk
         if pay == 'paynow':
-            return redirect("payment2",address=addr)    
+            return redirect("payment2")    
         else:
-            return redirect("book2",address=addr)
+            return redirect("book2")
     else:
         return redirect(shop_login)
 
-def payment2(req,address):
+def payment2(req):
     if 'user' in req.session:
         user = User.objects.get(username=req.session['user'])
         name = user.first_name
@@ -712,7 +709,7 @@ def payment2(req,address):
             req,
             "user/payment2.html",
             {
-                "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                "callback_url": "http://127.0.0.1:8000/callback2",
                 "razorpay_key": settings.RAZORPAY_KEY_ID,
                 "order": order,
             },
@@ -720,29 +717,50 @@ def payment2(req,address):
     else:
         return render(shop_login)
 
-    # if 'user' in req.session:
-    #     user=User.objects.get(username=req.session['user'])
-    #     cart=Cart.objects.filter(user=user)
-    #     pet=Pet.objects.all()
-    #     cat=Category.objects.all()
-    #     discount=0
-    #     for i in cart:
-    #         discount+=(float(i.pro.price-i.pro.ofr_price)*i.qty)
-    #     price=0
-    #     for i in cart:
-    #         price+=(i.pro.price)*i.qty
-    #     total=price-discount
-    #     address=Address.objects.get(pk=address)
-    #     return render(req,'user/payment2.html',{'price':total,'address':address,'pet':pet,'cat':cat})
-    # else:
-    #     return redirect(shop_login) 
-    
-def book2(req,address):
+@csrf_exempt
+def callback2(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return redirect("book2")  
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return redirect("book2")  
+ 
+
+    else:
+
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  
+
+def book2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
+        address=Address.objects.get(pk=req.session['address'])
         cart=Cart.objects.filter(user=user)
         for i in cart:
-            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty,price=i.price,address=Address.objects.get(pk=address))
+            data=Bookings.objects.create(user=i.user,pro=i.pro,qty=i.qty,price=i.price,address=Address.objects.get(pk=address.pk))
             data.save()
         cart.delete()
         return redirect(bookings)

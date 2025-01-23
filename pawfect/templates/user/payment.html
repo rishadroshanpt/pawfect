@@ -14,14 +14,9 @@
 <body>
   {% block content %}
   <div class="pay">
-    <h3>Payment gateway</h3>
-    <h3 class="offerPrice">{{price}}</h3>
-    <a class="btn" href="../../book/{{data.pk}}/{{address.pk}}">CONFIRM PAYMENT</a>
     <form method="POST">
       {% csrf_token %}
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      <input type="hidden" name="data" value="{{ data.pk }}">
-      <input type="hidden" name="address" value="{{ address.pk }}">
       <script>
       var options = {
           key: "{{razorpay_key}}",
