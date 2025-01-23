@@ -12,55 +12,43 @@
     <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm  fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="../user_home">Home</a>
-          </li>
-          <li class="nav-item dropdown petDrop">
-            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">FILTER</a>
-            <ul class="dropdown-menu petDrop-menu">
-              {% for i in pet %}
-              <li class="nav-item dropdown catDrop">
-                <a class="nav-link " href="" role="button" data-bs-toggle="dropdown">{{i.pet}}</a>
-                <ul class="dropdown-menu catDrop-menu">
-                  {% for j in cat %}
-                  {% if j.pet == i %}
-                  <li><a class="dropdown-item" href="../products/{{j.pk}}">{{j.category}}</a></li>
-                  {% endif %}
-                  {% endfor %}
-                </ul>
-              </li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../viewCart">CART</a>
-          </li>
-          <li class="nav-item dropdown userDrop">
-            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">hi , {{user.first_name}}</a>
-            <ul class="dropdown-menu userDrop-menu">
-
-                  <li><a class="dropdown-item" href="../bookings">bookings</a></li>
-                  <li><a class="dropdown-item" href="../viewFav">favorite</a></li>
-                  <li><a class="dropdown-item" href="../address">address</a></li>
-                  <li><a class="dropdown-item" href="../logout">logout</a></li>
-            </ul>
-          </li>   
-        </ul>
-      </div>
-    </div>
-  </nav>
+  {% block content %}
+  
   <div class="pay">
     <h3>Payment gateway</h3>
     <h3 class="offerPrice">{{price}}</h3>
     <a class="btn" href="../book2/{{address.pk}}">CONFIRM PAYMENT</a>
+    <form method="POST">
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      <script>
+      var options = {
+          key: "{{razorpay_key}}",
+          amount: "{{order.amount}}",
+          currency: "INR",
+          name: "{{order.name}}",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: "{{order.provider_order_id}}",
+          callback_url: "{{callback_url}}",
+          redirect: true,
+          prefill: {
+              "name": "Gaurav Kumar",
+              "email": "gaurav.kumar@example.com",
+              "contact": "9999999999"
+          },
+          notes: {
+              "address": "Razorpay Corporate Office"
+          },
+          theme: {
+              "color": "#3399cc"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+      </script>
+      <input type="hidden" custom="Hidden Element" name="hidden">
+  </form>
+  {% endblock %}
   </div>
 
 
