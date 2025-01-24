@@ -59,32 +59,81 @@
       </div>
     </div>
   </nav>
-  <div class="container fav">
-    <div class="row">
-      {% for i in data %}
-      <div class="col-10">
-        <a class="" href="product/{{i.pro.pk}}">
-          <div class="row">
-            <div class="col-4">
-              <img class="img-fluid" src="{{i.pro.img.url}}" alt="">
+  <div class="body">
+    <div class="container fav">
+      <div class="row">
+        {% for i in data %}
+        <div class="col-10">
+          <a class="" href="product/{{i.pro.pk}}">
+            <div class="row">
+              <div class="col-4">
+                <img class="img-fluid" src="{{i.pro.img.url}}" alt="">
+              </div>
+              <div class="col-8">
+                <h2>{{i.pro.name}}</h2>
+                <h2>{{i.pro.dis}}</h2>
+              </div>
             </div>
-            <div class="col-8">
-              <h2>{{i.pro.name}}</h2>
-              <h2>{{i.pro.dis}}</h2>
-            </div>
-          </div>
-        </a>
-
+          </a>
+  
+        </div>
+        <div class="col-2">
+          <a href="deleteFav/{{i.pk}}" class="btn btn-danger">REMOVE</a>
+  
+        </div>
+  
+        {% endfor %}
       </div>
-      <div class="col-2">
-        <a href="deleteFav/{{i.pk}}" class="btn btn-danger">REMOVE</a>
-
-      </div>
-
-      {% endfor %}
+  
     </div>
-
   </div>
+  
+  <footer class="footer">
+
+    <div class="container">
+
+
+      <div class="row mb-5">
+        <div class="col-md-4">
+          <div class="site-logo">
+            <a href="#">Pawfect</a>
+          </div>
+        </div>
+        <div class="col-md-8 text-md-right">
+          <ul class="list-unstyled social-icons">
+            <li><a href="#" class="fb"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a></li>
+            <li><a href="#" class="tw"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+            <li><a href="#" class="in"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-6 ">
+          <ul class="nav-links list-unstyled nav-left">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-md-right">
+          <ul class="nav-links list-unstyled nav-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row3">
+        <div class="col ">
+          <div class="copyright">
+            <p><small>Copyright 2019. All Rights Reserved.</small></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 </body>
 
 </html>

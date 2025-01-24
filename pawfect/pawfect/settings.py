@@ -133,4 +133,4 @@ EMAIL_HOST_USER = 'rish27778@gmail.com'
 EMAIL_HOST_PASSWORD = 'htux iklg snqj taqq'
 
 RAZORPAY_KEY_ID = 'rzp_test_RAJKUCued3Gse1JDi'
-RAZORPAY_KEY_SECRET = 'UGUCbkkl_1@eTy8rZV7tWA1xl5b'
+RAZORPAY_KEY_SECRET = 'UGUCbkk_1@leTy8rZV7tWA1xl5b'

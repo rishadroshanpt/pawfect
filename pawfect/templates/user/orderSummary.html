@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME</title>
-    <link href='https://fonts.googleapis.com/css?family=Cute Font' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME</title>
+  <link href='https://fonts.googleapis.com/css?family=Cute Font' rel='stylesheet'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
 </head>
+
 <body>
   <nav class="navbar navbar-expand-sm  fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="../../../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
+      <a class="navbar-brand" href="../../../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt=""
+          width="150px"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,55 +50,105 @@
             <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">hi , {{user.first_name}}</a>
             <ul class="dropdown-menu userDrop-menu">
 
-                  <li><a class="dropdown-item" href="../../../bookings">bookings</a></li>
-                  <li><a class="dropdown-item" href="../../../viewFav">favorite</a></li>
-                  <li><a class="dropdown-item" href="../../../address">address</a></li>
-                  <li><a class="dropdown-item" href="../../../logout">logout</a></li>
+              <li><a class="dropdown-item" href="../../../bookings">bookings</a></li>
+              <li><a class="dropdown-item" href="../../../viewFav">favorite</a></li>
+              <li><a class="dropdown-item" href="../../../address">address</a></li>
+              <li><a class="dropdown-item" href="../../../logout">logout</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <div class="body">
     <div class="container os">
-        <div class="row">
-            <div class="col-lg-4">
-                <img src="{{prod.product.img.url}}" alt="">
-                <h3 class="name">{{prod.product.name}}</h3>
+      <div class="row">
+        <div class="col-lg-4">
+          <img src="{{prod.product.img.url}}" alt="">
+          <h3 class="name">{{prod.product.name}}</h3>
 
-            </div>
-            <div class="col-lg-8">
-              <form class="addressForm" action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="">Shipping address : </label><br>
-                <select name="address" id="address">
-                  {% for i in data %}
-                    <option value="{{i.pk}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
-                  {% endfor %}
-                </select><br>
-                <a href="../../../address">Add new address + </a>
-                <div class="row row2">
-                  <div class="col-lg-6">
-                    <h3>Total price : </h3>
-                    <h3>You save : </h3>
-                    <h3>Total amount payable : </h3>
-                  </div>
-                  <div class="col-lg-6">
-                    <h3 class="price">{{prod.price}}</h3>
-                    <h3 class="discount">-{{discount}}</h3>
-                    <h3 class="offerPrice">{{prod.ofr_price}}</h3>
-                  </div>
-                </div>
-                <h3>Payment method :</h3><br>
-                <input type="radio" name="pay" id="paynow" value="paynow">
-                <label for="paynow">Pay now</label><br>
-                <input type="radio" name="pay" id="paylater" value="paylater">
-                <label for="paylater">Pay later</label><br>
-                
-                <button type="submit" class="btn">CONFIRM</button>
-              </form>             
-            </div>
         </div>
+        <div class="col-lg-8">
+          <form class="addressForm" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Shipping address : </label><br>
+            <select name="address" id="address">
+              {% for i in data %}
+              <option value="{{i.pk}}">{{i.name}},{{i.house}},{{i.street}},{{i.pin}},{{i.state}}</option>
+              {% endfor %}
+            </select><br>
+            <a href="../../../address">Add new address + </a>
+            <div class="row row2">
+              <div class="col-lg-6">
+                <h3>Total price : </h3>
+                <h3>You save : </h3>
+                <h3>Total amount payable : </h3>
+              </div>
+              <div class="col-lg-6">
+                <h3 class="price">{{prod.price}}</h3>
+                <h3 class="discount">-{{discount}}</h3>
+                <h3 class="offerPrice">{{prod.ofr_price}}</h3>
+              </div>
+            </div>
+            <h3>Payment method :</h3><br>
+            <input type="radio" name="pay" id="paynow" value="paynow">
+            <label for="paynow">Pay now</label><br>
+            <input type="radio" name="pay" id="paylater" value="paylater">
+            <label for="paylater">Pay later</label><br>
+
+            <button type="submit" class="btn">CONFIRM</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <footer class="footer">
+
+    <div class="container">
+
+
+      <div class="row mb-5">
+        <div class="col-md-4">
+          <div class="site-logo">
+            <a href="#">Pawfect</a>
+          </div>
+        </div>
+        <div class="col-md-8 text-md-right">
+          <ul class="list-unstyled social-icons">
+            <li><a href="#" class="fb"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a></li>
+            <li><a href="#" class="tw"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+            <li><a href="#" class="in"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-6 ">
+          <ul class="nav-links list-unstyled nav-left">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-md-right">
+          <ul class="nav-links list-unstyled nav-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row3">
+        <div class="col ">
+          <div class="copyright">
+            <p><small>Copyright 2019. All Rights Reserved.</small></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 </body>
+
 </html>

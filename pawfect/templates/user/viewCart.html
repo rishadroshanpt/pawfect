@@ -60,50 +60,99 @@
       </div>
     </div>
   </nav>
-  <div class="container cart-container">
-    {% if data %}
-    {% for i in data %}
-    <div class="row cartView">
-      <div class="col-lg-6 col1">
-        <!-- <a class="product" href="product/{{i.pk}}"> -->
-        <img src="{{i.pro.product.img.url}}" alt="">
+  <div class="body">
+    <div class="container cart-container">
+      {% if data %}
+      {% for i in data %}
+      <div class="row cartView">
+        <div class="col-lg-6 col1">
+          <!-- <a class="product" href="product/{{i.pk}}"> -->
+          <img src="{{i.pro.product.img.url}}" alt="">
+        </div>
+        <div class="col-lg-6 col2">
+          <h2>{{i.pro.product.name}}</h2>
+          <div class="cartQty">
+            <a class="btn" href="cartDecrement/{{i.pk}}">-</a>
+            <h4 id="qty">{{i.qty}}</h4><a class="btn" href="cartIncrement/{{i.pk}}">+</a>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xs-6">
+              <h4>Price for 1 item</h4>
+              <h4>Offer Price for 1 item</h4>
+              <h4>You save</h4>
+              <h4>Total price for {{i.qty}} items</h4>
+            </div>
+            <div class="col-lg-6 col-xs-6">
+              <h4 id="price">{{i.pro.price}}</h4>
+              <h4 class="offerPrice">{{i.pro.ofr_price}}</h4>
+              <h4 id="price">{{i.pro.ofr_per}} %</h4>
+              <h4 class="totalPrice">{{i.price}}</h4>
+            </div>
+          </div>
+  
+        </div>
       </div>
-      <div class="col-lg-6 col2">
-        <h2>{{i.pro.product.name}}</h2>
-        <div class="cartQty">
-          <a class="btn" href="cartDecrement/{{i.pk}}">-</a>
-          <h4 id="qty">{{i.qty}}</h4><a class="btn" href="cartIncrement/{{i.pk}}">+</a>
+      {% endfor %}
+      <div class="row totalRow">
+        <div class="col-lg-6">
+          <h2><span class="totalText">Total amount payable for all products in the cart : </span><span
+              class="total">{{total}}</span></h2>
         </div>
-        <div class="row">
-          <div class="col-lg-6 col-xs-6">
-            <h4>Price for 1 item</h4>
-            <h4>Offer Price for 1 item</h4>
-            <h4>You save</h4>
-            <h4>Total price for {{i.qty}} items</h4>
-          </div>
-          <div class="col-lg-6 col-xs-6">
-            <h4 id="price">{{i.pro.price}}</h4>
-            <h4 class="offerPrice">{{i.pro.ofr_price}}</h4>
-            <h4 id="price">{{i.pro.ofr_per}} %</h4>
-            <h4 class="totalPrice">{{i.price}}</h4>
-          </div>
+        <div class="col-lg-6">
+          <a class="btn buyAll" href="buyAll">CHECKOUT CART</a>
         </div>
+      </div>
+      {% else %}
+      <h2>Start shoping</h2>
+      {% endif %}
+    </div>
+  </div>
+  
+  <footer class="footer">
 
+    <div class="container">
+
+
+      <div class="row mb-5">
+        <div class="col-md-4">
+          <div class="site-logo">
+            <a href="#">Pawfect</a>
+          </div>
+        </div>
+        <div class="col-md-8 text-md-right">
+          <ul class="list-unstyled social-icons">
+            <li><a href="#" class="fb"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a></li>
+            <li><a href="#" class="tw"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+            <li><a href="#" class="in"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a></li>
+          </ul>
+        </div>
       </div>
+
+      <div class="row mb-5">
+        <div class="col-md-6 ">
+          <ul class="nav-links list-unstyled nav-left">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-md-right">
+          <ul class="nav-links list-unstyled nav-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row3">
+        <div class="col ">
+          <div class="copyright">
+            <p><small>Copyright 2019. All Rights Reserved.</small></p>
+          </div>
+        </div>
+      </div>
+
     </div>
-    {% endfor %}
-    <div class="row totalRow">
-      <div class="col-lg-6">
-        <h2><span class="totalText">Total amount payable for all products in the cart : </span><span
-            class="total">{{total}}</span></h2>
-      </div>
-      <div class="col-lg-6">
-        <a class="btn buyAll" href="buyAll">CHECKOUT CART</a>
-      </div>
-    </div>
-    {% else %}
-    <h2>Start shoping</h2>
-    {% endif %}
+  </footer>
 </body>
 
 </html>

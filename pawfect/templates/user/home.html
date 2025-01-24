@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME</title>
-    <link href='https://fonts.googleapis.com/css?family=Cute Font' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME</title>
+  <link href='https://fonts.googleapis.com/css?family=Cute Font' rel='stylesheet'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/userHome.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
+
 <body>
   <nav class="navbar navbar-expand-sm  fixed-top">
     <div class="container-fluid">
@@ -48,127 +51,127 @@
             <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">hi , {{user.first_name}}</a>
             <ul class="dropdown-menu userDrop-menu">
 
-                  <li><a class="dropdown-item" href="bookings">bookings</a></li>
-                  <li><a class="dropdown-item" href="viewFav">favorite</a></li>
-                  <li><a class="dropdown-item" href="address">address</a></li>
-                  <li><a class="dropdown-item" href="logout">logout</a></li>
+              <li><a class="dropdown-item" href="bookings">bookings</a></li>
+              <li><a class="dropdown-item" href="viewFav">favorite</a></li>
+              <li><a class="dropdown-item" href="address">address</a></li>
+              <li><a class="dropdown-item" href="logout">logout</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="main">
-    <img src="{% static 'images/homeMain2.jpeg'%}" alt="" class="homeImg">
-  </div>
+  <div class="body">
+    <div class="main">
+      <img src="{% static 'images/homeMain2.jpeg'%}" alt="" class="homeImg">
+    </div>
     <div class="container">
-        <div class="row">
-            {% for i in pet %}
-                <div class="colomn">
-                    <a class="petLink" href="petType/{{i.pk}}">
-                        <img class="petPhoto img-fluid" src="{{i.img.url}}" alt="" >
-                        <h2 class="petName">{{i.pet}}</h2>
-                    </a>     
-                </div>
-            {% endfor %}
+      <div class="row">
+        {% for i in pet %}
+        <div class="colomn">
+          <a class="petLink" href="petType/{{i.pk}}">
+            <img class="petPhoto img-fluid" src="{{i.img.url}}" alt="">
+            <h2 class="petName">{{i.pet}}</h2>
+          </a>
         </div>
+        {% endfor %}
+      </div>
     </div>
     <div class="latest-main">
       <h2>LATEST PRODUCTS</h2>
       <div class="container swiper">
-          <div class="card-wrapper">
-              <ul class="card-list swiper-wrapper">
-                  {% for i in data %}
-                  <li class="card-item swiper-slide">
-                      <a href="product/{{i.pk}}" class="card-link">
-                          <img src="{{i.img.url}}" alt="" class="card-image">
-                          <h5 class="card-title">{{i.name}}</h5>
-                          <!-- <h5 class="card-title">{{i.dis}}</h5> -->
-                      </a>
-                  </li>
-                  {% endfor %}
-              </ul>
-              <!-- <div class="swiper-pagination"></div> -->
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-          </div>
+        <div class="card-wrapper">
+          <ul class="card-list swiper-wrapper">
+            {% for i in data %}
+            <li class="card-item swiper-slide">
+              <a href="product/{{i.pk}}" class="card-link">
+                <img src="{{i.img.url}}" alt="" class="card-image">
+                <h5 class="card-title">{{i.name}}</h5>
+                <!-- <h5 class="card-title">{{i.dis}}</h5> -->
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <!-- <div class="swiper-pagination"></div> -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
+      </div>
     </div>
     <div class="discount-main">
       <h2>PRODUCTS WITH MORE THAN 30% DISCOUNT</h2>
       <div class="container swiper">
-          <div class="card-wrapper">
-              <ul class="card-list swiper-wrapper">
-                  {% for i in data3 %}
-                  <li class="card-item swiper-slide">
-                      <a href="product/{{i.product.pk}}" class="card-link">
-                          <img src="{{i.product.img.url}}" alt="" class="card-image">
-                          <h5 class="card-title">{{i.product.name}}</h5>
-                          <h5 class="card-title">{{i.dis}}</h5>
-                          <h5><s><span>{{i.price}}</span></s>
-                            <span>{{i.ofr_price}}</span></h5>
-                      </a>
-                  </li>
-                  {% endfor %}
-              </ul>
-              <!-- <div class="swiper-pagination"></div> -->
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-          </div>
+        <div class="card-wrapper">
+          <ul class="card-list swiper-wrapper">
+            {% for i in data3 %}
+            <li class="card-item swiper-slide">
+              <a href="product/{{i.product.pk}}" class="card-link">
+                <img src="{{i.product.img.url}}" alt="" class="card-image">
+                <h5 class="card-title">{{i.product.name}}</h5>
+                <h5 class="card-title">{{i.dis}}</h5>
+                <h5><s><span>{{i.price}}</span></s>
+                  <span>{{i.ofr_price}}</span>
+                </h5>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <!-- <div class="swiper-pagination"></div> -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
+      </div>
     </div>
-    <footer class="footer">
-      
-      <div class="container">
+  </div>
 
-        
-        <div class="row mb-5">
-          <div class="col-md-4">
-            <div class="site-logo">
-              <a href="#">Colorlib</a>
-            </div>
-          </div>
-          <div class="col-md-8 text-md-right">
-            <ul class="list-unstyled social-icons">
-              <li><a href="#" class="fb"><span class="icon-facebook"></span></a></li>
-              <li><a href="#" class="tw"><span class="icon-twitter"></span></a></li>
-              <li><a href="#" class="in"><span class="icon-instagram"></span></a></li>
-              <li><a href="#" class="be"><span class="icon-behance"></span></a></li>
-              <li><a href="#" class="dr"><span class="icon-dribbble"></span></a></li>
-              <li><a href="#" class="yt"><span class="icon-play"></span></a></li>
-            </ul>
-          </div>
-        </div>
+  <footer class="footer">
 
-        <div class="row mb-5">
-          <div class="col-md-6 ">
-            <ul class="nav-links list-unstyled nav-left">
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Policy</a></li>
-            </ul>
-          </div>
-          <div class="col-md-6 text-md-right">
-            <ul class="nav-links list-unstyled nav-right">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Our works</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
+    <div class="container">
+
+
+      <div class="row mb-5">
+        <div class="col-md-4">
+          <div class="site-logo">
+            <a href="#">Pawfect</a>
           </div>
         </div>
-        <div class="row">
-          <div class="col ">
-            <div class="copyright">
-              <p><small>Copyright 2019. All Rights Reserved.</small></p>
-            </div>
+        <div class="col-md-8 text-md-right">
+          <ul class="list-unstyled social-icons">
+            <li><a href="#" class="fb"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a></li>
+            <li><a href="#" class="tw"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+            <li><a href="#" class="in"><span class="icon-instagram"><i class="fa-brands fa-instagram"></i></span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-6 ">
+          <ul class="nav-links list-unstyled nav-left">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-md-right">
+          <ul class="nav-links list-unstyled nav-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row row3">
+        <div class="col ">
+          <div class="copyright">
+            <p><small>Copyright 2019. All Rights Reserved.</small></p>
           </div>
         </div>
-      
+      </div>
+
     </div>
   </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>

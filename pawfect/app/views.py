@@ -364,15 +364,23 @@ def products(req,pid):
     
 def product(req,pid):
     if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
         data=Product.objects.get(pk=pid)
         data1=Details.objects.filter(product=pid)
         pet=Pet.objects.all()
         cat=Category.objects.all()
+        fav=Fav.objects.filter(user=user)
+        for i in fav:
+            if i.pro.pk==data.pk:
+                f=1
+                break
+            else:
+                f=0
         data2=Details.objects.get(product=pid,pk=data1[0].pk)
         if req.GET.get('dis'):
             dis=req.GET.get('dis')
             data2=Details.objects.get(product=pid,pk=dis)
-        return render(req,'user/product.html',{'data':data,'data1':data1,'data2':data2,'pet':pet,'cat':cat})
+        return render(req,'user/product.html',{'data':data,'data1':data1,'data2':data2,'pet':pet,'cat':cat,'f':f})
     else:
         return redirect(shop_login)
     
@@ -544,10 +552,7 @@ def order_payment(req):
         user = User.objects.get(username=req.session['user'])
         data = Details.objects.get(pk=req.session['det'])
         name = user.first_name
-        # data=Details.objects.get(pk=pid)
         amount = data.ofr_price
-        # if data:
-        #     req.session['det']=data
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
