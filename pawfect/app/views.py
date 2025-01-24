@@ -370,12 +370,11 @@ def product(req,pid):
         pet=Pet.objects.all()
         cat=Category.objects.all()
         fav=Fav.objects.filter(user=user)
+        f=0
         for i in fav:
             if i.pro.pk==data.pk:
                 f=1
                 break
-            else:
-                f=0
         data2=Details.objects.get(product=pid,pk=data1[0].pk)
         if req.GET.get('dis'):
             dis=req.GET.get('dis')

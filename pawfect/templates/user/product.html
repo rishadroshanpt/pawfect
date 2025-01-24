@@ -69,11 +69,10 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <img class="petPhoto" src="{{data.img.url}}" alt="">
+          <img class="proImg" src="{{data.img.url}}" alt="">
         </div>
         <div class="col-lg-6">
           <h2>{{data.name}}</h2>
-          <h3>{{data.dis}}</h3>
           <h4 class="offerPer">Special price</h4>
           <h4><span class="offerPrice">{{data2.ofr_price}}</span><del><span
                 class="price">{{data2.price}}</span></del><span class="offerPer">{{data2.ofr_per}}% off</span></h4>
@@ -99,6 +98,9 @@
           {% else %}
             <a class="btn fav" href="../addFav/{{data.pk}}"><i class="fa-regular fa-heart"></i></a>
           {% endif %}
+          <h4>Description</h4>
+          <h5>{{data.dis}}</h5>
+
 
 
   
@@ -116,7 +118,7 @@
       <div class="row mb-5">
         <div class="col-md-4">
           <div class="site-logo">
-            <a href="#">Pawfect</a>
+            <a class="navbar-brand" href="../../../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
           </div>
         </div>
         <div class="col-md-8 text-md-right">

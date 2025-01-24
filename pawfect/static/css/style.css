@@ -272,9 +272,8 @@ footer .container{
     margin-top: 70px;
     margin-bottom: 70px;
 }
-footer .site-logo a{
-    font-size: 34px;
-    color: black;
+footer .site-logo img{
+    width: 150px;
 }
 footer .nav-left a,.nav-right a,.copyright{
     color: grey;
