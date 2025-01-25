@@ -327,11 +327,18 @@ def booking(req):
 def user_home(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
-        data=Product.objects.all()[: : -1]
+        pro=Product.objects.all()[: : -1]
+        data=[]
+        c=1
+        for i in pro:
+            data.append(i)
+            c+=1
+            if c>10:
+                break
         data1=Details.objects.all()
         data3=[]
         for i in data1:
-            if i.ofr_per>30:
+            if i.ofr_per>20:
                 data3.append(i)
         pet=Pet.objects.all()
         cat=Category.objects.all()
