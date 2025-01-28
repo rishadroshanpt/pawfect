@@ -788,6 +788,8 @@ def deleteBookings(req,pid):
     
 def address(req):
     if 'user' in req.session:
+        pet=Pet.objects.all()
+        cat=Category.objects.all()
         user=User.objects.get(username=req.session['user'])
         data=Address.objects.filter(user=user)
         if req.method=='POST':
@@ -802,7 +804,7 @@ def address(req):
             data.save()
             return redirect(address)
         else:
-            return render(req,"user/addAddress.html",{'data':data})
+            return render(req,"user/addAddress.html",{'data':data,'pet':pet,'cat':cat})
     else:
         return redirect(shop_login) 
     
