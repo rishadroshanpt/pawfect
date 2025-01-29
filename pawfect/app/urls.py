@@ -6,7 +6,7 @@ urlpatterns=[
     path('register',views.register),
     path('validate/<name>/<password>/<email>/<otp>',views.validate,name="validate"),
     path('logout',views.shp_logout),
-    path('shop_home',views.shop_home),
+    path('shop_home',views.shop_home,name='shopHome'),
     path('shop_petType/<pid>',views.shop_petType),
     path('shopProds/<pid>',views.shopProds),
     path('shopProd/<pid>',views.shopProd),
@@ -26,7 +26,7 @@ urlpatterns=[
 
     # -------------------------------user-----------------------------
 
-    path('user_home',views.user_home),
+    path('user_home',views.user_home,name='userHome'),
     path('products/<pid>',views.products),
     path('product/<pid>',views.product),
     path('petType/<pid>',views.petType),

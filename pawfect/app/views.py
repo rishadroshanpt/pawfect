@@ -15,10 +15,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def shop_login(req):
+    # print(req.session['user1'])
+
+    # print(req.session['eshop'])
     if 'eshop' in req.session:
-        return redirect(shop_home)
+        return redirect('shopHome')
     if 'user' in req.session:
-        return redirect(user_home)
+        return redirect('userHome')
     if req.method=='POST':
         uname=req.POST['uname']
         password=req.POST['passwd']
@@ -37,6 +40,11 @@ def shop_login(req):
     
     else:
         return render(req,'login.html')
+    
+def shp_logout(req):
+    req.session.flush()          #delete session
+    logout(req)
+    return redirect(shop_login)
     
 def OTP(req):
     digits = "0123456789"
@@ -75,10 +83,7 @@ def validate(req,name,password,email,otp):
     else:
         return render(req,'validate.html',{'name':name,'pass':password,'email':email,'otp':otp})
 
-def shp_logout(req):
-    req.session.flush()          #delete session
-    logout(req)
-    return redirect(shop_login)
+
 
 # -----------------------------------shop------------------------------
 
@@ -325,6 +330,8 @@ def booking(req):
 # -----------------------------------shop------------------------------
 
 def user_home(req):
+    # print(req.session['user1'])
+
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         pro=Product.objects.all()[: : -1]
