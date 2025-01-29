@@ -10,15 +10,23 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="post" class="reg" id="registerForm">
         {% csrf_token %}
         <img src="{% static 'images/pawfectlogohead.jpg'%}" alt="" class="loginImg">
         <input type="text" name="name" id="" placeholder="Name"><br>
         <input type="email" name="email" id="" placeholder="Email"><br>
-        <input type="password" name="password" id="" placeholder="Password"><br>
+        <input type="password" name="password" id="pass" placeholder="Password"><br>
+        <ul class="req">
+            <li id="len">Min 8 letters</li>
+            <li id="cap">Min 1 cap letter</li>
+            <li id="sml">Min 1 small letter</li>
+            <li id="dig">Min 1 digit letter</li>
+            <li id="char">Min 1 special char letter</li>
+        </ul>
         <input type="submit" class="btn" value="SIGN IN">
-        <a href="../">LOGIN</a>
+        <a class="log btn" href="../">LOGIN</a>
     </form>
+    <div id="password-message-container"></div>
     {% if messages %}
     {% for message in messages %}
     <div class="alert alert-warning alert-dismissible">
@@ -27,5 +35,6 @@
     </div>
     {% endfor %}
     {% endif %}
+    <script src="{% static 'js/reg.js' %}"></script>
 </body>
 </html>
