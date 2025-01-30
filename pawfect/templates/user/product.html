@@ -76,16 +76,19 @@
           <h4 class="offerPer">Special price</h4>
           <h4><span class="offerPrice">{{data2.ofr_price}}</span><del><span
                 class="price">{{data2.price}}</span></del><span class="offerPer">{{data2.ofr_per}}% off</span></h4>
-  
+
           {% if data2.stock > 0 %}
           <h4 class=" stock"> ONLY {{data2.stock}} LEFT</h4>
           {% else %}
           <h4 class="stock">OUT OF STOCK </h4>
           {% endif %}
           {% for j in data1 %}
-          <label class="" for="">
-            <input type="radio" onchange="get_correct_price('{{j.pk}}')" name="select" {% if data2.pk == j.pk %} checked {% endif %} id="">
-            <div class="label">{{j.dis}}</div>
+          <label class="dis" for="">
+            <div class="">
+              <input type="radio" onchange="get_correct_price('{{j.pk}}')" name="select" {% if data2.pk == j.pk %} checked {% endif %} id="">
+              <div class="label">{{j.dis}}</div>
+            </div>
+
           </label>
           {% endfor %} <br>
           {% if data2.stock > 0 %}
@@ -94,22 +97,22 @@
           {% else %}
           {% endif %}
           {% if f == 1 %}
-            <a class="btn fav fav-red" href="../addFav/{{data.pk}}"><i class="fa-solid fa-heart"></i></a>
+          <a class="btn fav fav-red" href="../addFav/{{data.pk}}"><i class="fa-solid fa-heart"></i></a>
           {% else %}
-            <a class="btn fav" href="../addFav/{{data.pk}}"><i class="fa-regular fa-heart"></i></a>
+          <a class="btn fav" href="../addFav/{{data.pk}}"><i class="fa-regular fa-heart"></i></a>
           {% endif %}
           <h4>Description</h4>
           <h5>{{data.dis}}</h5>
 
 
 
-  
-  
+
+
         </div>
       </div>
     </div>
   </div>
-  
+
   <footer class="footer">
 
     <div class="container">
@@ -118,7 +121,8 @@
       <div class="row mb-5">
         <div class="col-md-4">
           <div class="site-logo">
-            <a class="navbar-brand" href="../../../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt="" width="150px"></a>
+            <a class="navbar-brand" href="../../../user_home"><img src="{% static 'images/pawfectlogo.jpg'%}" alt=""
+                width="150px"></a>
           </div>
         </div>
         <div class="col-md-8 text-md-right">

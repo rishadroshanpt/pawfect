@@ -183,6 +183,8 @@ body{
     width: 300px;
     height: 280px;
     border-radius: 5px;
+    display:block;
+    margin:auto;
 }
 .os a{
     text-decoration: none;
