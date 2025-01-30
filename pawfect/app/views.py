@@ -11,6 +11,8 @@ import razorpay
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+from itertools import islice
+
 
 
 # Create your views here.
@@ -335,18 +337,9 @@ def user_home(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
         pro=Product.objects.all()[: : -1]
-        data=[]
-        c=1
-        for i in pro:
-            data.append(i)
-            c+=1
-            if c>10:
-                break
+        data = list(islice(pro, 10))
         data1=Details.objects.all()
-        data3=[]
-        for i in data1:
-            if i.ofr_per>20:
-                data3.append(i)
+        data3 = Details.objects.filter(ofr_per__gt=20)
         pet=Pet.objects.all()
         cat=Category.objects.all()
         return render(req,'user/home.html',{'data':data,'data1':data1,'pet':pet,'cat':cat,'user':user,'data3':data3})
